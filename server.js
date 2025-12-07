@@ -1,4 +1,3 @@
-// ====== Load environment variables ======
 require("dotenv").config();
 
 const express = require("express");
@@ -16,9 +15,9 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // ====== GET komentar ======
-app.get("/comments", async (req, res) => {
+app.get("/comment", async (req, res) => {
   const { data, error } = await supabase
-    .from("comments")
+    .from("comment") // <── UBAH
     .select("*")
     .order("id", { ascending: true });
 
@@ -27,19 +26,18 @@ app.get("/comments", async (req, res) => {
 });
 
 // ====== POST komentar ======
-app.post("/comments", async (req, res) => {
+app.post("/comment", async (req, res) => {
   const { nama, komen, owner } = req.body;
 
   if (!nama || !komen)
     return res.status(400).json({ error: "Nama dan komentar wajib diisi" });
 
   const { data, error } = await supabase
-    .from("comments")
+    .from("comment") // <── UBAH
     .insert([{ nama, komen, owner }]);
 
   if (error) return res.status(500).json({ error });
 
-  // === Send email (opsional) ===
   try {
     await sgMail.send({
       to: process.env.EMAIL_TO,
@@ -55,10 +53,14 @@ app.post("/comments", async (req, res) => {
 });
 
 // ====== DELETE komentar ======
-app.delete("/comments/:id", async (req, res) => {
+app.delete("/comment/:id", async (req, res) => {
   const id = req.params.id;
 
-  const { error } = await supabase.from("comments").delete().eq("id", id);
+  const { error } = await supabase
+    .from("comment") // <── UBAH
+    .delete()
+    .eq("id", id);
+
   if (error) return res.status(500).json({ error });
 
   res.json({ success: true });
