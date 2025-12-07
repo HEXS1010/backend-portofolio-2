@@ -1,4 +1,4 @@
-require("dotenv").config();
+equire("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
@@ -17,7 +17,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 // ====== GET komentar ======
 app.get("/comment", async (req, res) => {
   const { data, error } = await supabase
-    .from("comment") // <── UBAH
+    .from("comment")
     .select("*")
     .order("id", { ascending: true });
 
@@ -33,7 +33,7 @@ app.post("/comment", async (req, res) => {
     return res.status(400).json({ error: "Nama dan komentar wajib diisi" });
 
   const { data, error } = await supabase
-    .from("comment") // <── UBAH
+    .from("comment")
     .insert([{ nama, komen, owner }]);
 
   if (error) return res.status(500).json({ error });
@@ -57,7 +57,7 @@ app.delete("/comment/:id", async (req, res) => {
   const id = req.params.id;
 
   const { error } = await supabase
-    .from("comment") // <── UBAH
+    .from("comment")
     .delete()
     .eq("id", id);
 
