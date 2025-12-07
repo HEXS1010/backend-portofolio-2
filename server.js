@@ -17,19 +17,29 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // ====== GET komentar ======
 app.get("/comments", async (req, res) => {
-  const { data, error } = await supabase.from("comments").select("*").order("id", { ascending: true });
+  const { data, error } = await supabase
+    .from("comments")
+    .select("*")
+    .order("id", { ascending: true });
+
   if (error) return res.status(500).json({ error });
   res.json(data);
 });
 
 // ====== POST komentar ======
 app.post("/comments", async (req, res) => {
-  const { nama, komen } = req.body;
-  if (!nama || !komen) return res.status(400).json({ error: "Nama dan komentar wajib diisi" });
+  const { nama, komen, owner } = req.body;
 
-  const { data, error } = await supabase.from("comments").insert([{ nama, komen }]);
+  if (!nama || !komen)
+    return res.status(400).json({ error: "Nama dan komentar wajib diisi" });
+
+  const { data, error } = await supabase
+    .from("comments")
+    .insert([{ nama, komen, owner }]);
+
   if (error) return res.status(500).json({ error });
 
+  // === Send email (opsional) ===
   try {
     await sgMail.send({
       to: process.env.EMAIL_TO,
@@ -44,5 +54,18 @@ app.post("/comments", async (req, res) => {
   res.json({ success: true, data });
 });
 
+// ====== DELETE komentar ======
+app.delete("/comments/:id", async (req, res) => {
+  const id = req.params.id;
+
+  const { error } = await supabase.from("comments").delete().eq("id", id);
+  if (error) return res.status(500).json({ error });
+
+  res.json({ success: true });
+});
+
 // ====== Jalankan server ======
-app.listen(3000, () => console.log("Server jalan di http://localhost:3000"));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () =>
+  console.log("Server berjalan di port:", PORT)
+);
