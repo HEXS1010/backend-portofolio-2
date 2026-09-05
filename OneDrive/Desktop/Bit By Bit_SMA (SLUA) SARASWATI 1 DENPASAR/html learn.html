@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kursus HTML - Coding Learn</title>
+
+    <link rel="website" type="png" href="img/logo versi 2.png">
+
+    <!-- font -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+<!-- icons -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+     <!-- Remix Icon -->
+     <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"/>
+
+    <!-- logos font -->
+    <link href="https://cdn.jsdelivr.net/npm/font-logos@1/assets/font-logos.css" rel="stylesheet">
+
+    
+    <style>
+        :root {
+            --primary: #050a26;
+            --secondery: #ffc700;
+            --latar: #0E1623;
+            --border-color: #2d3748;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --blue-btn: #3b82f6;
+            --blue-btn-hover: #60a5fa;
+            --pixel-border-yellow: #c58d0d;
+            --pixel-shadow-yellow: #946300;
+            --pixel-border-blue: #1e40af;
+            --pixel-shadow-blue: #1e3a8a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: var(--latar); 
+            color: var(--text-primary);
+            font-family: "Source Code Pro", monospace;
+        }
+
+
+        /* navbar mulai */
+ .navbar {
+    display: flex;
+    position: fixed;    
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;        
+    background-color: var(--primary);
+    padding: 1rem 2rem;
+    font-weight: 500;
+    z-index: 100;
+    border-bottom: 1px solid white;
+}
+
+
+.burger div {
+  width: 25px;
+  height: 2px;
+  background-color: #ffffff;
+  margin: 7px;
+  transition: all 0.3s;
+  z-index: 99;
+}
+
+.burger {
+  display: none;
+  z-index: 500;
+  position: fixed;
+  top: 33px;
+  right: 35px;
+}
+
+.burger {
+    display: block;
+    cursor: pointer;
+  }
+
+  .toggle-burger .line-1 {
+    transform: rotate(-45deg) translate(-5px, 7px);
+  }
+
+  .toggle-burger .line-2 {
+    opacity: 0;
+  }
+
+  .toggle-burger .line-3 {
+    transform: rotate(45deg) translate(-5px, -7px);
+  }
+
+
+.burger {
+  display: block;
+}
+
+
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.navbar-item a i {
+  font-size: 16px;          
+}
+
+
+
+
+
+.hidden {
+    display: none;
+}
+
+.navbar a:hover {
+    color: var(--secondery)
+}
+
+.navbar ul {
+    list-style: none;
+    font-size: 20px;
+    z-index: 100;
+}
+
+.navbar-logo {
+    height: 4.5rem;
+    width: max-content;
+}
+
+.navbar-logo.logo-big {
+    display: block !important;
+}
+
+.navbar-logo.logo-small {
+    display: none !important; 
+}
+
+
+.navbar-group {
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 0;
+}
+
+.navbar-group.navbar-expand {
+    display: flex;
+}
+
+.navbar-item {
+    padding: 0.5rem;
+    position: relative;
+    text-wrap: nowrap;
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+    width: fit-content;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar-item:hover {
+    border-bottom: 1px solid var(--secondery);
+}
+
+.navbar .navbar-down {
+    display: none;
+    position: relative;
+    top: 100%;
+    left: 0;
+    background-color: var(--primary);
+    padding: 1rem;
+    z-index: 10;
+}
+
+.navbar-group,
+.navbar-action {
+  display: none; 
+}
+
+.burger {
+  display: block; 
+}
+
+.navbar-group.navbar-expand,
+.navbar-action.navbar-expand {
+  display: flex !important;
+}
+
+
+
+
+
+
+
+@keyframes menuReveal {
+    from {
+        transform: translateY(-0.5rem);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    
+}
+
+.navbar .navbar-action {
+    display: none;
+    gap: 1rem;
+    flex-direction: row;
+}
+
+
+
+.navbar .navbar-action.navbar-expand {
+    display: inherit;
+}
+
+
+.navbar .navbar-action button {
+    border: none;
+    font-size: 15px;
+    background-color: var(--secondery);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 200ms;
+}
+
+.navbar .navbar-action button:hover {
+    box-shadow: 5px 5px 0 var(--text-primary);
+    transform: translate(-5px, -5px);
+}
+
+/* navbar akhir */
+
+
+        .placeholder-navbar {
+            padding: 1.5rem 2rem;
+            background-color: var(--primary);
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+        .hero-container {
+            height: 90vh;
+            width: 100%;
+            background-image: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.559)), url('img/lab 1.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+        }
+        .hero-content { max-width: 600px; }
+        .hero-tags { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+        .hero-tags span {
+            border: 1.5px solid var(--text-primary);
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+        .hero-title {
+            font-family: "Source Code Pro", monospace;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+        .hero-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+            max-width: 500px;
+            margin-bottom: 2rem;
+        }
+        .pixel-btn {
+            font-family: "Source Code Pro", monospace;
+            text-decoration: none;
+            cursor: pointer;
+            border: 4px solid;
+            border-radius: 8px;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            position: relative;
+            top: 0;
+            transition: all 0.1s ease-in-out;
+        }
+        .pixel-btn:active {
+            top: 6px;
+            box-shadow: none;
+        }
+        .pixel-btn.yellow {
+            background-color: var(--secondery);
+            color: var(--primary);
+            border-color: var(--pixel-border-yellow);
+            box-shadow: 0 6px 0 0 var(--pixel-shadow-yellow);
+        }
+        .pixel-btn.blue {
+            background-color: var(--blue-btn);
+            color: var(--text-primary);
+            border-color: var(--pixel-border-blue);
+            box-shadow: 0 6px 0 0 var(--pixel-shadow-blue);
+        }
+        .progress-section {
+            display: flex;
+            justify-content: space-between;
+            background-color: #121C2D;
+            padding: 3rem 10%;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .chapters-container {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .chapter-card {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--latar);
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.2s ease;
+        }
+        .chapter-header {
+            cursor: pointer;
+        }
+        .chapter-card:hover {
+            background-color: #1a263a;
+        }
+        .chapter-header {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .chapter-number {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.5rem;
+            color: var(--text-secondary);
+            margin-right: 2rem;
+        }
+        .chapter-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            flex-grow: 1;
+        }
+        .chapter-toggle-icon {
+            color: var(--text-secondary);
+            transition: transform 0.3s ease;
+            font-size: 1.5rem;
+        }
+        .chapter-card.active .chapter-toggle-icon {
+            transform: rotate(180deg);
+        }
+        .exercises-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding-top 0.4s ease-out;
+        }
+        .chapter-card.active .exercises-list {
+            max-height: 1000px;
+            padding-top: 1.5rem;
+            transition: max-height 0.4s ease-in, padding-top 0.4s ease-in;
+        }
+        .chapter-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            padding-left: calc(2.5rem + 2rem);
+        }
+        .exercise-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            background-color: #121C2D;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            margin-left: calc(2.5rem + 2rem);
+        }
+        .exercise-item > span:first-of-type {
+            color: var(--text-secondary);
+            width: 100px;
+        }
+        .exercise-item > span:nth-of-type(2) {
+            flex-grow: 1;
+        }
+        .status-container {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+        .status-completed, .status-available, .status-locked { display: none; }
+        .status-completed { align-items: center; }
+        .exercise-item[data-status="completed"] .status-completed { display: flex; }
+        .exercise-item[data-status="available"] .status-available { display: block; }
+        .exercise-item[data-status="locked"] .status-locked { display: block; }
+        .status-badge { padding: 0.5rem 1.5rem; border-radius: 5px; font-weight: bold; font-size: 0.9rem; text-align: center; }
+        .status-badge.done { background: none; border: 2px solid var(--text-primary); color: var(--text-primary); }
+        .status-badge.pending { background: #334155; color: #94a3b8; }
+        .status-badge.start {
+            font-family: 'Press Start 2P', cursive;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.8rem;
+            border-width: 2px;
+            border-bottom-width: 4px;
+        }
+        .status-badge.start:active {
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+        }
+        .xp-badge { background-color: var(--secondery); color: var(--primary); padding: 0.5rem 1rem; font-weight: bold; border-radius: 5px; margin-left: 1rem; font-size: 0.9rem; }
+        .user-progress-container { flex: 1; min-width: 280px; }
+        .user-profile-card { background-color: var(--latar); border: 1px solid var(--border-color); padding: 1.5rem; margin-bottom: 1.5rem; text-align: center; }
+        .user-name { font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem; }
+        .user-level { color: var(--text-secondary); margin-bottom: 1rem; }
+        .view-profile-btn { color: var(--secondery); text-decoration: none; }
+        .progress-details-card h4 {text-align: center; margin-bottom: 1rem;}
+        .progress-details-card { background-color: var(--latar); border: 1px solid var(--border-color); padding: 1.5rem; }
+        .progress-item { display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 0.9rem; }
+        .progress-label { color: var(--text-secondary); }
+        .progress-value { font-weight: bold; }
+
+
+        /* responsif */
+/* Mobile (max 600px) */
+@media only screen and (max-width: 600px) {
+
+  /* body {
+    background: #2d3e50;
+  } */
+
+  /* navbar */
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-group,
+  .navbar-action {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .navbar-group.navbar-expand,
+  .navbar-action.navbar-expand {
+    display: flex;
+  }
+
+  .burger {
+    display: block;
+    position: absolute;
+    right: 1.5rem;
+  }
+    
+}
+
+/* Tablet (601px – 1024px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+
+
+  /* navbar */
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-logo {
+    
+    margin-bottom: 0;
+  }
+
+  .navbar-group,
+ .navbar-action {
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+
+.navbar-group.navbar-expand,
+.navbar-action.navbar-expand {
+  display: flex;
+}
+
+.burger {
+  display: block;
+  position: absolute;
+  right: 1.5rem;
+}
+
+
+}
+
+/* Desktop (1025px ke atas) */
+@media (min-width: 1025px) {
+
+  
+ 
+
+  /* navbar */
+  .navbar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .navbar-group {
+    display: flex !important;
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+
+  .navbar-action {
+    display: flex !important;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+
+  .navbar .navbar-down {
+  position: absolute;
+  display: none;
+  box-shadow: 5px 5px 5px var(--secondery);
+  border: 1px solid white; 
+  
+  
+}
+
+.navbar-down.navbar-expand {
+  display: block;
+  animation: menuReveal 200ms linear;
+}
+
+
+  .burger {
+    display: none;
+  }
+}
+    </style>
+</head>
+<body>
+
+
+
+    <!-- navbar mulai -->
+     <header>
+        <nav class="navbar">
+            <img class="navbar-logo logo-big" src="img/logo revisi 2.png" alt="logo">
+            
+            <!-- navbar group -->
+            <ul class="navbar-group navbar-expanded">
+                <li class="navbar-item"><a href="index.html">Home</a></li>
+                <li class="navbar-item"><a href="#learn">Learn &#9662;</a>
+                    <ul class="navbar-down">
+                        <li class="navbar-item"><a href="">Web Dev</a></li>
+                        <li class="navbar-item"><a href="">Game Dev</a></li>
+                        <li class="navbar-item"><a href="">Cybersecurity</a></li>
+                    </ul>
+                </li>
+                <li class="navbar-item"><a href="">Language &#9662;</a>
+                    <ul class="navbar-down">
+                        <li class="navbar-item"><a href="html learn.html"><i class="fa-brands fa-html5"></i>Html</a></li>
+                        <li class="navbar-item"><a href=""><i class="fa-brands fa-css3-alt"></i>Css</a></li>
+                        <li class="navbar-item"><a href=""><i class="fa-brands fa-java"></i>Java</a></li>
+                        <li class="navbar-item"><a href=""><i class="fa-brands fa-python"></i>Python</a></li>
+                        <li class="navbar-item"><a href=""><i class="fa-brands fa-php"></i>Php</a></li>
+                    </ul>
+                </li>
+                <li class="navbar-item"><a href="community.html">Community &#9662;</a>
+                    <ul class="navbar-down">
+                        <li class="navbar-item"><a href="community.html"><i class="fa-solid fa-globe"></i>COMMUNITY</a></li>
+                        <li class="navbar-item"><a href=""><i class="fa-regular fa-calendar"></i>Event</a></li>
+                    </ul>
+                </li> 
+                <li class="navbar-item"><a href="community.html">Forum</a></li>
+            </ul>
+
+          <div class="burger">
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+          </div>
+
+
+            <div class="navbar-action">
+              <a href="login.html">
+                <button>Login</button>
+                <button>Sign Up</button>
+              </a>
+            </div>
+        </nav>
+     </header>
+    <!-- navbar akhir -->
+    
+
+
+
+
+    <main>
+        <section class="hero-container">
+            <div class="hero-content">
+                <div class="hero-tags">
+                    <span>PEMULA</span><span>KURSUS</span>
+                </div>
+                <h1 class="hero-title">HTML</h1>
+                <p class="hero-description">Buat situs web pertamamu dengan HTML, fondasi dari web, dan selami dunia pengembangan web.</p>
+                <a href="lab-html.html" class="hero-button pixel-btn yellow">Mulai Belajar</a>
+            </div>
+        </section>
+
+        <section class="progress-section">
+            <div class="chapters-container">
+                <!-- Chapter 1: Elemen HTML -->
+                <div class="chapter-card" data-chapter-id="1">
+                    <div class="chapter-header">
+                        <span class="chapter-number">1</span><h2 class="chapter-title">Elemen HTML</h2><i class="fas fa-chevron-down chapter-toggle-icon"></i>
+                    </div>
+                    <div class="exercises-list">
+                        <p class="chapter-description">Buat halaman web pertamamu dengan mempelajari elemen dan tag dasar.</p>
+                        <!-- Exercises 1-7 -->
+                        <div class="exercise-item" data-exercise-id="1"><span>Latihan 1</span><span>Bintang Jatuh</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=1" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="2"><span>Latihan 2</span><span>Dasar Elemen</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=2" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="3"><span>Latihan 3</span><span>Surat Kabar</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=3" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="4"><span>Latihan 4</span><span>Penekanan Teks</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=4" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="5"><span>Latihan 5</span><span>Daftar Belanja</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=5" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="6"><span>Latihan 6</span><span>Hewan Hilang</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=6" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="7"><span>Latihan 7</span><span>Elemen Terakhir</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=7" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                    </div>
+                </div>
+                <!-- CHAPTER 2: Struktur -->
+                <div class="chapter-card" data-chapter-id="2">
+                   <div class="chapter-header"><span class="chapter-number">2</span><h2 class="chapter-title">Struktur</h2><i class="fas fa-chevron-down chapter-toggle-icon"></i></div>
+                       <div class="exercises-list">
+                            <p class="chapter-description">Pelajari cara menyusun dokumen HTML-mu dengan benar.</p>
+                            <!-- Exercises 8-14 -->
+                            <div class="exercise-item" data-exercise-id="8"><span>Latihan 1</span><span>Cetak Biru</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=8" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                            <div class="exercise-item" data-exercise-id="9"><span>Latihan 2</span><span>Kepala & Badan</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=9" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                            <div class="exercise-item" data-exercise-id="10"><span>Latihan 3</span><span>Judul Halaman</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=10" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                            <div class="exercise-item" data-exercise-id="11"><span>Latihan 4</span><span>Info Meta</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=11" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                            <div class="exercise-item" data-exercise-id="12"><span>Latihan 5</span><span>Komentar</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=12" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                            <div class="exercise-item" data-exercise-id="13"><span>Latihan 6</span><span>Div & Span</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=13" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                            <div class="exercise-item" data-exercise-id="14"><span>Latihan 7</span><span>Struktur Lengkap</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=14" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        </div>
+                </div>
+                <!-- CHAPTER 3: Forms -->
+                <div class="chapter-card" data-chapter-id="3">
+                    <div class="chapter-header"><span class="chapter-number">3</span><h2 class="chapter-title">Formulir</h2><i class="fas fa-chevron-down chapter-toggle-icon"></i></div>
+                    <div class="exercises-list">
+                        <p class="chapter-description">Pahami cara mengumpulkan input pengguna dengan formulir.</p>
+                        <!-- Exercises 15-21 -->
+                        <div class="exercise-item" data-exercise-id="15"><span>Latihan 1</span><span>Wadah Formulir</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=15" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="16"><span>Latihan 2</span><span>Input Teks</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=16" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="17"><span>Latihan 3</span><span>Beri Label</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=17" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="18"><span>Latihan 4</span><span>Area Teks</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=18" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="19"><span>Latihan 5</span><span>Kotak Pilihan</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=19" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="20"><span>Latihan 6</span><span>Jenis Input</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=20" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="21"><span>Latihan 7</span><span>Tombol Kirim</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=21" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                    </div>
+                </div>
+                <!-- CHAPTER 4: Semantic HTML -->
+                <div class="chapter-card" data-chapter-id="4">
+                    <div class="chapter-header"><span class="chapter-number">4</span><h2 class="chapter-title">HTML Semantik</h2><i class="fas fa-chevron-down chapter-toggle-icon"></i></div>
+                    <div class="exercises-list">
+                        <p class="chapter-description">Tulis HTML yang lebih bermakna dan mudah diakses dengan tag semantik.</p>
+                        <!-- Exercises 22-28 -->
+                        <div class="exercise-item" data-exercise-id="22"><span>Latihan 1</span><span>Header</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=22" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="23"><span>Latihan 2</span><span>Navigasi</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=23" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="24"><span>Latihan 3</span><span>Konten Utama</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=24" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="25"><span>Latihan 4</span><span>Seksi</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=25" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="26"><span>Latihan 5</span><span>Artikel</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=26" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="27"><span>Latihan 6</span><span>Konten Samping</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=27" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="28"><span>Latihan 7</span><span>Footer</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+10XP</div></div><div class="status-available"><a href="lab-html.html?exercise=28" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                    </div>
+                </div>
+                <!-- CHAPTER 5: Projek Sederhana -->
+                <div class="chapter-card" data-chapter-id="5">
+                    <div class="chapter-header"><span class="chapter-number">5</span><h2 class="chapter-title">Projek Sederhana</h2><i class="fas fa-chevron-down chapter-toggle-icon"></i></div>
+                    <div class="exercises-list">
+                        <p class="chapter-description">Gabungkan semua pengetahuanmu untuk membangun proyek sederhana dari awal.</p>
+                        <!-- Exercises 29-35 -->
+                        <div class="exercise-item" data-exercise-id="29"><span>Proyek 1</span><span>Struktur Halaman</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+20XP</div></div><div class="status-available"><a href="lab-html.html?exercise=29" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="30"><span>Proyek 2</span><span>Header & Judul</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+20XP</div></div><div class="status-available"><a href="lab-html.html?exercise=30" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="31"><span>Proyek 3</span><span>Tambah Gambar</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+20XP</div></div><div class="status-available"><a href="lab-html.html?exercise=31" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="32"><span>Proyek 4</span><span>Deskripsi Diri</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+20XP</div></div><div class="status-available"><a href="lab-html.html?exercise=32" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="33"><span>Proyek 5</span><span>Daftar Keahlian</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+20XP</div></div><div class="status-available"><a href="lab-html.html?exercise=33" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="34"><span>Proyek 6</span><span>Formulir Kontak</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+20XP</div></div><div class="status-available"><a href="lab-html.html?exercise=34" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                        <div class="exercise-item" data-exercise-id="35"><span>Proyek 7</span><span>Info Footer</span><div class="status-container"><div class="status-completed"><div class="status-badge done">Selesai!</div><div class="xp-badge">+20XP</div></div><div class="status-available"><a href="lab-html.html?exercise=35" class="status-badge start pixel-btn blue">Mulai</a></div><div class="status-locked"><div class="status-badge pending">???</div></div></div></div>
+                    </div>
+                </div>
+            </div>
+            <aside class="user-progress-container">
+                <div class="user-profile-card">
+                    <h3 class="user-name">Nama Anda</h3>
+                    <p class="user-level">Level 1</p>
+                    <a href="#" class="view-profile-btn">Lihat Profil</a>
+                </div>
+                <div class="progress-details-card">
+                    <h4>Progres Kursus</h4>
+                    <div class="progress-item">
+                        <span class="progress-label">Latihan</span><span class="progress-value" id="progress-exercises">0 / 28</span>
+                    </div>
+                    <div class="progress-item">
+                        <span class="progress-label">Proyek Selesai</span><span class="progress-value" id="progress-projects">0 / 7</span>
+                    </div>
+                    <div class="progress-item">
+                        <span class="progress-label">Jumlah XP</span><span class="progress-value" id="progress-xp">0 / 420</span>
+                    </div>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <script>
+
+        // navbar, login & sign up
+const navItem = document.querySelectorAll(".navbar-group > .navbar-item");
+
+navItem.forEach((nav) => {
+    const navDown = nav.querySelector(".navbar-down");
+    if (navDown) {
+        nav.addEventListener("mouseenter", () => {
+            navDown.classList.add("navbar-expand");
+        });
+        nav.addEventListener("mouseleave", () => {
+            navDown.classList.remove("navbar-expand");
+        });
+    }
+});
+
+
+
+const menuToggle = document.querySelector(".burger");
+const navbarGroup = document.querySelector(".navbar-group");
+const navbarAction = document.querySelector(".navbar-action");
+
+menuToggle.addEventListener("click", () => {
+    navbarGroup.classList.toggle("navbar-expand");
+    navbarAction.classList.toggle("navbar-expand");
+
+    menuToggle.classList.toggle("toggle-burger");
+});
+
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const chapterCards = document.querySelectorAll(".chapter-card");
+        const heroButton = document.querySelector('.hero-button');
+
+        chapterCards.forEach(card => {
+            const header = card.querySelector('.chapter-header');
+            if (header) {
+                header.addEventListener('click', () => {
+                    card.classList.toggle('active');
+                });
+            }
+        });
+
+        function updateUI() {
+            const progress = JSON.parse(localStorage.getItem('htmlLabProgress')) || {};
+            let totalCompletedCount = 0;
+            let totalProjectCount = 0;
+            let totalXp = 0;
+            const exercisesXP = 10;
+            const projectExercisesXP = 20;
+
+            let firstOverallUncompletedId = null;
+
+            chapterCards.forEach(card => {
+                const exercises = card.querySelectorAll('.exercise-item');
+                let isPrevInChapterComplete = true; 
+
+                exercises.forEach((exerciseEl, index) => {
+                    const id = exerciseEl.dataset.exerciseId;
+                    const isCompleted = progress[id]?.isCompleted || false;
+
+                    if (isCompleted) {
+                        exerciseEl.setAttribute('data-status', 'completed');
+                        totalCompletedCount++;
+                        totalXp += (parseInt(id) >= 29) ? projectExercisesXP : exercisesXP;
+                        if (parseInt(id) >= 29) totalProjectCount++;
+
+                    } else {
+                        if (index === 0 || isPrevInChapterComplete) {
+                            exerciseEl.setAttribute('data-status', 'available');
+                            if (!firstOverallUncompletedId) {
+                                firstOverallUncompletedId = id;
+                            }
+                        } else {
+                            exerciseEl.setAttribute('data-status', 'locked');
+                        }
+                        isPrevInChapterComplete = false;
+                    }
+                });
+            });
+            
+            document.getElementById('progress-exercises').textContent = `${totalCompletedCount - totalProjectCount} / 28`;
+            document.getElementById('progress-projects').textContent = `${totalProjectCount} / 7`;
+            document.getElementById('progress-xp').textContent = `${totalXp} / 420`;
+
+
+            if (totalCompletedCount > 0) {
+                heroButton.textContent = "Lanjutkan Belajar";
+                if (firstOverallUncompletedId) {
+                    heroButton.href = `lab-html.html?exercise=${firstOverallUncompletedId}`;
+                } else {
+                    heroButton.textContent = "Kursus Selesai!";
+                    heroButton.href = "#"; 
+                }
+            } else {
+                heroButton.href = `lab-html.html?exercise=1`;
+            }
+        }
+
+        updateUI();
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+:root {
+            --primary: #050a26;
+            --secondery: #ffc700;
+            --latar: #0E1623;
+            --border-color: #2d3748;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --blue-btn: #3b82f6;
+            --blue-btn-hover: #60a5fa;
+            --pixel-border-yellow: #c58d0d;
+            --pixel-shadow-yellow: #946300;
+            --pixel-border-blue: #1e40af;
+            --pixel-shadow-blue: #1e3a8a;
+        }
+        
+        
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { 
+            background-color: var(--latar); 
+            color: var(--text-primary);
+            font-family: "Source Code Pro", monospace;
+        }
+
+
+
+
+
+.placeholder-navbar {
+            padding: 1.5rem 2rem;
+            background-color: var(--primary);
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        .hero-container {
+            height: 80vh;
+            width: 100%;
+            background-image: url('..img/lab 1.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+        }
+        .hero-content { max-width: 600px; }
+        .hero-tags { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+        .hero-tags span {
+            border: 1.5px solid var(--text-primary);
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+        .hero-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+        .hero-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin-bottom: 2rem;
+        }
+        .pixel-btn {
+            font-family: 'Press Start 2P', cursive;
+            text-decoration: none;
+            cursor: pointer;
+            border: 4px solid;
+            border-radius: 8px;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            position: relative;
+            top: 0;
+            transition: all 0.1s ease-in-out;
+        }
+        .pixel-btn:active {
+            top: 6px;
+            box-shadow: none;
+        }
+        .pixel-btn.yellow {
+            background-color: var(--secondery);
+            color: var(--primary);
+            border-color: var(--pixel-border-yellow);
+            box-shadow: 0 6px 0 0 var(--pixel-shadow-yellow);
+        }
+        .pixel-btn.blue {
+            background-color: var(--blue-btn);
+            color: var(--text-primary);
+            border-color: var(--pixel-border-blue);
+            box-shadow: 0 6px 0 0 var(--pixel-shadow-blue);
+        }
+        .progress-section {
+            display: flex;
+            justify-content: space-between;
+            background-color: #121C2D;
+            padding: 3rem 10%;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .chapters-container {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .chapter-card {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--latar);
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.2s ease;
+        }
+        .chapter-header {
+            cursor: pointer;
+        }
+        .chapter-card:hover {
+            background-color: #1a263a;
+        }
+        .chapter-header {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .chapter-number {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.5rem;
+            color: var(--text-secondary);
+            margin-right: 2rem;
+        }
+        .chapter-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            flex-grow: 1;
+        }
+        .chapter-toggle-icon {
+            color: var(--text-secondary);
+            transition: transform 0.3s ease;
+            font-size: 1.5rem;
+        }
+        .chapter-card.active .chapter-toggle-icon {
+            transform: rotate(180deg);
+        }
+        .exercises-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding-top 0.4s ease-out;
+        }
+        .chapter-card.active .exercises-list {
+            max-height: 1000px;
+            padding-top: 1.5rem;
+            transition: max-height 0.4s ease-in, padding-top 0.4s ease-in;
+        }
+        .chapter-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            padding-left: calc(2.5rem + 2rem);
+        }
+        .exercise-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            background-color: #121C2D;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            margin-left: calc(2.5rem + 2rem);
+        }
+        .exercise-item > span:first-of-type {
+            color: var(--text-secondary);
+            width: 100px;
+        }
+        .exercise-item > span:nth-of-type(2) {
+            flex-grow: 1;
+        }
+        .status-container {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+        .status-completed, .status-available, .status-locked { display: none; }
+        .status-completed { align-items: center; }
+        .exercise-item[data-status="completed"] .status-completed { display: flex; }
+        .exercise-item[data-status="available"] .status-available { display: block; }
+        .exercise-item[data-status="locked"] .status-locked { display: block; }
+        .status-badge { padding: 0.5rem 1.5rem; border-radius: 5px; font-weight: bold; font-size: 0.9rem; text-align: center; }
+        .status-badge.done { background: none; border: 2px solid var(--text-primary); color: var(--text-primary); }
+        .status-badge.pending { background: #334155; color: #94a3b8; }
+        .status-badge.start {
+            font-family: 'Press Start 2P', cursive;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.8rem;
+            border-width: 2px;
+            border-bottom-width: 4px;
+        }
+        .status-badge.start:active {
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+        }
+        .xp-badge { background-color: var(--secondery); color: var(--primary); padding: 0.5rem 1rem; font-weight: bold; border-radius: 5px; margin-left: 1rem; font-size: 0.9rem; }
+        .user-progress-container { flex: 1; min-width: 280px; }
+        .user-profile-card { background-color: var(--latar); border: 1px solid var(--border-color); padding: 1.5rem; margin-bottom: 1.5rem; text-align: center; }
+        .user-name { font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem; }
+        .user-level { color: var(--text-secondary); margin-bottom: 1rem; }
+        .view-profile-btn { color: var(--secondery); text-decoration: none; }
+        .progress-details-card h4 {text-align: center; margin-bottom: 1rem;}
+        .progress-details-card { background-color: var(--latar); border: 1px solid var(--border-color); padding: 1.5rem; }
+        .progress-item { display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 0.9rem; }
+        .progress-label { color: var(--text-secondary); }
+        .progress-value { font-weight: bold; }
+
+
+
+
+
+
+
+

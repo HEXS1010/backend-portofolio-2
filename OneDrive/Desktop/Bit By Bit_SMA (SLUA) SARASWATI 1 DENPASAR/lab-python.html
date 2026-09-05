@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Python - Coding Learn</title>
+
+    <link rel="website" type="png" href="img/logo versi 2.png">
+
+    <!-- font -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+   
+
+
+
+    <style>
+        /* loading logo mulai */
+        #preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0e1623;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  #logo {
+    width: 150px;
+    position: relative;
+    z-index: 2;
+  }
+
+  @media (max-width: 600px) {
+    #logo {
+      width: 120px;
+    }
+  }
+  /* loading logo akhir */
+
+
+
+
+        :root {
+            --bg-dark-primary: #0E1623;
+            --bg-dark-secondary: #121C2D;
+            --bg-editor: #1A2841;
+            --text-primary: #FFFFFF;
+            --text-secondary: #a0aec0;
+            --border-color: #2d3748;
+            --yellow: #ffc700;
+            --green: #4ade80;
+            --red: #f87171;
+            --blue: #3b82f6;
+            --python-blue: #3776ab;
+            --python-yellow: #ffd43b;
+            --pixel-yellow-border: #c58d0d;
+            --pixel-yellow-shadow: #946300;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg-dark-primary);
+            color: var(--text-primary);
+            font-family: 'Source Code Pro', monospace;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .lab-header {
+            display: flex; align-items: center; padding: 1rem 2rem; background-color: var(--bg-dark-secondary); border-bottom: 2px solid var(--border-color); flex-shrink: 0;
+        }
+        .lab-header .brand {
+            font-family: 'Source Code Pro', monospace; font-size: 1.2rem; color: var(--yellow); text-decoration: none;
+        }
+        .lab-header .breadcrumb {
+            margin-left: 2rem; color: var(--text-secondary);
+        }
+        .lab-header .progress-bar-container {
+            display: flex;
+            align-items: center;
+            margin-left: 1rem;
+            flex-grow: 1; 
+            max-width: 200px;
+        }
+        .lab-header .progress-bar {
+            width: 100%; height: 10px; background-color: var(--bg-editor); border-radius: 5px; overflow: hidden;
+        }
+        .lab-header .progress-bar-fill {
+            height: 100%; background-color: var(--green); border-radius: 5px; transition: width 0.3s ease;
+        }
+        .lab-header .progress-percent {
+            margin-left: 0.75rem; font-size: 0.9rem; font-weight: bold;
+        }
+        .lab-main {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr; /* Dua kolom */
+            flex-grow: 1;
+            gap: 2px;
+            background-color: var(--border-color);
+            padding: 2px;
+            height: calc(100vh - 120px);
+        }
+        .panel {
+            background-color: var(--bg-dark-secondary);
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+        .panel-instructions h1 {
+            font-family: 'Source Code Pro', monospace; font-size: 1.8rem; margin-bottom: 2rem; line-height: 1.4;
+        }
+        .panel-instructions h2 {
+            font-family: 'Source Code Pro', monospace; font-size: 1.2rem; color: var(--yellow); margin-bottom: 1rem; margin-top: 2rem;
+        }
+        .panel-instructions p {
+            color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;
+        }
+        .panel-instructions code {
+            background-color: var(--bg-editor); padding: 2px 6px; border-radius: 4px; font-weight: bold;
+        }
+        .panel-instructions .code-block { 
+            display: block; 
+            background-color: var(--bg-editor); 
+            padding: 0.75rem 1rem; 
+            margin-top: 0.5rem; 
+            margin-bottom: 1rem;
+            border-radius: 6px; 
+            white-space: pre-wrap;
+            line-height: 1.5;
+            font-weight: normal;
+            border-left: 3px solid var(--python-yellow);
+        }
+        .panel-instructions b { 
+            color: var(--yellow); 
+            font-weight: normal;
+        }
+        
+        .panel-interactive {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-dark-secondary);
+            padding: 0;
+            overflow: hidden;
+        }
+        .editor-container {
+            flex: 6; /* Memberi lebih banyak ruang untuk editor */
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .editor-header {
+            padding: 0.75rem 1.5rem; background-color: var(--bg-dark-secondary); font-weight: bold; display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .editor-header i { color: var(--python-blue); }
+        .editor-area {
+            display: flex; 
+            flex-grow: 1; 
+            position: relative;
+            overflow-y: auto; /* PERBAIKAN: SCROLLBAR DI SINI */
+            background-color: var(--bg-editor);
+        }
+        #line-numbers {
+            padding: 1rem 0.75rem 1rem 1.5rem; font-size: 1rem; color: var(--text-secondary); text-align: right; user-select: none; line-height: 1.5;
+        }
+        #code-editor {
+            flex-grow: 1; width: 100%; background-color: transparent; border: none; color: var(--text-primary); font-family: 'Source Code Pro', monospace; font-size: 1rem; padding: 1rem; resize: none; line-height: 1.5;
+        }
+        #code-editor:focus { outline: none; }
+        
+        .terminal-container {
+            flex: 4; /* Memberi ruang yang cukup untuk terminal */
+            display: flex;
+            flex-direction: column;
+            border-top: 2px solid var(--border-color);
+        }
+        .terminal-header {
+            padding: 0.75rem 1.5rem; background-color: var(--bg-dark-secondary); font-weight: bold; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
+        }
+        .terminal-controls {
+            display: flex; gap: 1rem;
+        }
+        .terminal-btn {
+            font-family: 'Source Code Pro', monospace; padding: 0.5rem 1rem; font-size: 0.8rem; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.2s;
+        }
+        .btn-run { background-color: var(--blue); color: white; }
+        .btn-run:hover { background-color: #60a5fa; }
+        .btn-submit { background-color: transparent; color: var(--text-secondary); border: 2px solid var(--border-color); }
+        .btn-submit:hover { background-color: var(--border-color); color: var(--text-primary); }
+
+        #terminal-output {
+            width: 100%;
+            height: 100%;
+            border: none;
+            flex-grow: 1;
+            background-color: #000;
+            padding: 1rem;
+            color: white;
+            font-family: 'Source Code Pro', monospace;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .lab-footer {
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background-color: var(--bg-dark-secondary); border-top: 2px solid var(--border-color); flex-shrink: 0;
+        }
+        .system-log {
+            font-family: 'Source Code Pro', monospace; color: var(--text-secondary); font-size: 0.9rem;
+        }
+        .system-log .cursor {
+            display: inline-block; background-color: var(--green); margin-left: 5px; width: 10px; height: 1em; animation: blink 1s infinite; vertical-align: middle;
+        }
+        @keyframes blink { 0%, 49% { opacity: 1; } 50%, 99% { opacity: 0; } 100% { opacity: 1; } }
+        .nav-buttons .pixel-btn { padding: 0.75rem 2rem; font-size: 1rem; }
+        .pixel-btn {
+            font-family: 'Source Code Pro', monospace; text-decoration: none; cursor: pointer; border: 4px solid; position: relative; top: 0; transition: all 0.1s ease-in-out; border-radius: 8px;
+        }
+        .pixel-btn:active { top: 6px; box-shadow: none; }
+        .pixel-btn.yellow {
+            background-color: var(--yellow); color: var(--bg-dark-primary); border-color: var(--pixel-yellow-border); box-shadow: 0 6px 0 0 var(--pixel-yellow-shadow);
+        }
+        .pixel-btn.gray { background-color: #4b5563; color: var(--text-secondary); border-color: #1f2937; box-shadow: 0 6px 0 0 #111827; }
+        .pixel-btn:disabled {
+            background-color: #374151; color: #6b7280; border-color: #1f2937; box-shadow: 0 6px 0 0 #111827; cursor: not-allowed; top: 0;
+        }
+        .pixel-btn:disabled:active { top: 0; }
+        .feedback-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); display: none; justify-content: center; align-items: center; z-index: 1000;
+        }
+        .feedback-modal-content {
+            background-color: var(--bg-dark-secondary); border: 2px solid var(--border-color); padding: 2.5rem 3rem; text-align: center; font-family: 'Press Start 2P', cursive; box-shadow: 0 10px 0 0 #000;
+        }
+        .feedback-modal-content h3 { font-size: 1.5rem; margin-bottom: 1.5rem; }
+        .feedback-modal-content.success h3 { color: var(--green); }
+        .feedback-modal-content.error h3 { color: var(--red); }
+
+
+        /* --- MOBILE (max-width: 1024px) --- */
+
+ /* --- MOBILE (max-width: 1024px) --- */
+@media screen and (max-width: 1024px) {
+  
+  .lab-main {
+    display: block;
+    height: auto;
+  }
+
+
+  .lab-main {
+    flex: 1;
+    overflow-y: auto;  
+    min-height: 0; 
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 80px);
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .panel {
+    flex: 1;
+    overflow: auto;
+  }
+
+  
+  .lab-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0.6rem;    
+    background-color: var(--bg-dark-secondary);
+    border-top: 2px solid var(--border-color);
+    z-index: 10;
+  }
+
+  .lab-footer button {
+    font-size: 0.7rem;          
+    padding: 0.3rem 0.6rem;    
+    border-radius: 4px;
+  }
+
+  
+  .panel {
+    display: none;
+    height: auto;
+  }
+
+
+  .panel.active {
+    display: block;
+  }
+
+  
+  .lab-tabs {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--bg-dark-secondary);
+    border-bottom: 2px solid var(--border-color);
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-family: 'Press Start 2P', cursive;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .tab-btn.active {
+    border-bottom: 3px solid var(--yellow);
+    color: var(--yellow);
+  }
+
+  
+  .lab-header {
+    flex-wrap: nowrap;
+    gap: 1rem;
+  }
+
+  .lab-header .brand img {
+    height: 32px;
+    width: auto;
+    vertical-align: middle;
+  }
+
+  .lab-header .breadcrumb {
+    margin-left: 0;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+
+  .lab-footer .pixel-btn {
+    font-size: 0.65rem;       
+    padding: 0.35rem 0.7rem;  
+    border-width: 2px;        
+    border-radius: 4px;      
+  }
+
+  .editor-container {
+    flex: 1;
+    min-height: 250px;
+  }
+
+  .terminal-container {
+    min-height: 150px;
+    background: var(--bg-dark-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    overflow: auto;
+  }
+
+   
+}
+
+
+/* --- DESKTOP (min-width: 1025px) --- */
+@media screen and (min-width: 1025px) {
+  .lab-header .brand img {
+    height: 48px;  
+    width: auto;
+    vertical-align: middle;
+  }
+
+  .lab-header .breadcrumb {
+    margin-left: 1.5rem;
+    font-size: 1rem;
+  }
+
+  .lab-tabs {
+    display: none;
+  }
+
+
+  #instructions-panel {
+    flex: 1; 
+    margin: 0;
+    padding: 0.6rem 0.6rem;  
+    box-sizing: border-box;
+  }
+
+  
+  #interactive-panel {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0.5rem;
+    box-sizing: border-box;
+   
+  }
+
+  .editor-container {
+    flex: 1;
+    min-height: 250px;
+  }
+
+  .terminal-container {
+    min-height: 150px;
+    background: var(--bg-dark-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    overflow: auto;
+  }
+
+}
+
+    </style>
+</head>
+<body>
+
+     <!-- Preloader -->
+  <div id="preloader">
+    <img id="logo" src="/img/logo versi 2.png" alt="Logo">
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script>
+    let tl = gsap.timeline();
+
+    // 1. Logo muncul (zoom in dari kecil ke normal)
+    tl.from("#logo", {
+      duration: 1.5,
+      scale: 0,
+      opacity: 0,
+      ease: "elastic.out(1, 0.5)"
+    });
+
+    // 2. Hilangkan preloader setelah beberapa saat
+    tl.to("#preloader", {
+      delay: 1,
+      duration: 1,
+      opacity: 0,
+      onComplete: () => {
+        document.getElementById("preloader").style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+    });
+  </script>
+
+</head>
+<body>
+
+    <header class="lab-header">
+        <a href="belajar-python.html" class="brand">
+            <img src="/img/logo revisi 2.png" alt="logo">
+        </a>
+        <div class="breadcrumb" id="breadcrumb">Python / ...</div>
+        <div class="progress-bar-container">
+            <div class="progress-bar"><div class="progress-bar-fill" id="progress-fill"></div></div>
+            <span class="progress-percent" id="progress-percent">0%</span>
+        </div>
+    </header>
+
+    <!-- saat ukuran hp -->
+    <div class="lab-tabs">
+<button class="tab-btn active" data-target="instructions-panel">Learn</button>
+<button class="tab-btn" data-target="interactive-panel">Code & output</button>
+</div>
+
+    <main class="lab-main">
+        <div class="panel panel-instructions" id="instructions-panel"></div>
+        <div class="panel-interactive">
+
+
+            <div class="panel" id="interactive-panel">
+                <div class="editor-container">
+                    <div class="editor-header"><i class="fa-brands fa-python"></i><span>main.py</span></div>
+                    <div class="editor-area">
+                        <div id="line-numbers"></div>
+                        <textarea id="code-editor" spellcheck="false"></textarea>
+                    </div>
+                </div>
+                <div class="terminal-container">
+                    <div class="terminal-header">
+                        <span>Terminal</span>
+                        <div class="terminal-controls">
+                            <button class="terminal-btn btn-run" id="run-btn">Jalankan</button>
+                            <button class="terminal-btn btn-submit" id="submit-btn">Kirim</button>
+                        </div>
+                    </div>
+                    <div id="terminal-output"></div>
+                </div>
+            </div>
+            </div>
+    </main>
+
+    <footer class="lab-footer">
+        <div class="system-log">
+            <span id="log-message">[Log Sistem]: Memulai...</span><span class="cursor"></span>
+        </div>
+        <div class="nav-buttons">
+            <button class="pixel-btn gray" id="back-btn">Kembali</button>
+            <button class="pixel-btn yellow" id="next-btn">Lanjut</button>
+        </div>
+    </footer>
+    
+    <div class="feedback-modal-overlay" id="feedback-modal">
+        <div class="feedback-modal-content" id="modal-content">
+            <h3 id="modal-title"></h3>
+            <button class="pixel-btn yellow" id="modal-close-btn">Lanjutkan</button>
+        </div>
+    </div>
+
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const UIElements = {
+            codeEditor: document.getElementById('code-editor'),
+            terminalOutput: document.getElementById('terminal-output'),
+            runBtn: document.getElementById('run-btn'),
+            submitBtn: document.getElementById('submit-btn'),
+            lineNumbers: document.getElementById('line-numbers'),
+            instructionsPanel: document.getElementById('instructions-panel'),
+            breadcrumb: document.getElementById('breadcrumb'),
+            progressFill: document.getElementById('progress-fill'),
+            progressPercent: document.getElementById('progress-percent'),
+            logMessage: document.getElementById('log-message'),
+            nextBtn: document.getElementById('next-btn'),
+            backBtn: document.getElementById('back-btn'),
+            feedbackModal: document.getElementById('feedback-modal'),
+            modalContent: document.getElementById('modal-content'),
+            modalTitle: document.getElementById('modal-title'),
+            modalCloseBtn: document.getElementById('modal-close-btn'),
+        };
+
+        const commentText = '# Tulis kode di bawah ini';
+        const localStorageKey = 'pythonLabProgress';
+
+        const allExercises = [
+            // Chapter 1: Dasar-Dasar Python
+            { id: 1, chapter: 1, chapterName: "Dasar-Dasar Python", name: "Hello, World!", solution: { regex: /print\s*\(\s*["']Hello, World!["']\s*\)/ }, content: { title: "01. Hello, World!", h2: "Perintah Pertama", paragraphs: ["Di Python, fungsi <code>print()</code> digunakan untuk menampilkan output ke terminal. Teks (string) harus diapit oleh tanda kutip tunggal (<code>''</code>) atau ganda (<code>\"\"</code>).", "<b>Contoh Pengerjaan:</b><code class='code-block'>print(\"Selamat Belajar Python!\")</code><b>Output Terminal:</b><code class='code-block'>Selamat Belajar Python!</code>"], instructions: "Tampilkan teks 'Hello, World!' ke terminal menggunakan fungsi <code>print()</code>."}},
+            { id: 2, chapter: 1, chapterName: "Dasar-Dasar Python", name: "Komentar", solution: { regex: /#.+/, validateWithComments: true }, content: { title: "02. Komentar", h2: "Meninggalkan Catatan", paragraphs: ["Komentar adalah baris yang diabaikan oleh Python. Komentar dimulai dengan tanda pagar (<code>#</code>) dan berguna untuk memberikan penjelasan pada kode.", "<b>Contoh Pengerjaan:</b><code class='code-block'># Ini adalah variabel untuk skor pemain\nskor = 100</code><b>Output Terminal:</b><code class='code-block'>(Tidak ada output)</code>"], instructions: "Tulis komentar satu baris apa pun di editor."}},
+            { id: 3, chapter: 1, chapterName: "Dasar-Dasar Python", name: "Variabel", solution: { regex: /\w+\s*=\s*.+/ }, content: { title: "03. Variabel", h2: "Menyimpan Data", paragraphs: ["Variabel adalah nama yang kita berikan untuk menyimpan data. Tidak seperti bahasa lain, Anda tidak perlu mendeklarasikan tipe variabel di Python.", "<b>Contoh Pengerjaan:</b><code class='code-block'>nama = \"Budi\"\numur = 20\nprint(nama)\nprint(umur)</code><b>Output Terminal:</b><code class='code-block'>Budi\n20</code>"], instructions: "Buat variabel bernama <code>planet</code> dan berikan nilai string 'Bumi'."}},
+            { id: 4, chapter: 1, chapterName: "Dasar-Dasar Python", name: "Tipe Data", solution: { regex: /jarak\s*=\s*\d+\s*\nkecepatan\s*=\s*\d+\.\d+/ }, content: { title: "04. Tipe Data", h2: "Jenis-Jenis Data", paragraphs: ["Python memiliki beberapa tipe data dasar, termasuk <code>int</code> (bilangan bulat), <code>float</code> (bilangan desimal), dan <code>str</code> (string).", "<b>Contoh Pengerjaan:</b><code class='code-block'>jumlah_murid = 30 # Ini int\ntinggi_badan = 175.5 # Ini float\nprint(type(jumlah_murid))\nprint(type(tinggi_badan))</code><b>Output Terminal:</b><code class='code-block'>&lt;class 'int'&gt;\n&lt;class 'float'&gt;</code>"], instructions: "Buat variabel <code>jarak</code> dengan nilai integer 150, dan variabel <code>kecepatan</code> dengan nilai float 60.5."}},
+            { id: 5, chapter: 1, chapterName: "Dasar-Dasar Python", name: "F-Strings", solution: { regex: /print\(\s*f["'].*\{.*\}.*["']\s*\)/ }, content: { title: "05. F-Strings", h2: "Format String Modern", paragraphs: ["F-string adalah cara mudah untuk menyisipkan variabel ke dalam string. Awali string dengan huruf <code>f</code> dan letakkan nama variabel di dalam kurung kurawal <code>{}</code>.", "<b>Contoh Pengerjaan:</b><code class='code-block'>buah = \"Apel\"\nharga = 5000\nprint(f\"Harga {buah} adalah {harga}\")</code><b>Output Terminal:</b><code class='code-block'>Harga Apel adalah 5000</code>"], instructions: "Buat variabel <code>nama</code> dan <code>kota</code>. Gunakan f-string untuk mencetak kalimat 'Nama saya [nama], saya dari [kota].'"}},
+            
+            // Chapter 2: Struktur Data
+            { id: 6, chapter: 2, chapterName: "Struktur Data", name: "List", solution: { regex: /\w+\s*=\s*\[.*,.*\]/ }, content: { title: "06. List", h2: "Kumpulan Data Terurut", paragraphs: ["List adalah kumpulan item yang terurut dan dapat diubah. List dibuat dengan kurung siku <code>[]</code>.", "<b>Contoh Pengerjaan:</b><code class='code-block'>angka = [2, 4, 6, 8]\nprint(angka)</code><b>Output Terminal:</b><code class='code-block'>[2, 4, 6, 8]</code>"], instructions: "Buat sebuah list bernama <code>hewan</code> yang berisi 'kucing', 'anjing', dan 'burung'."}},
+            { id: 7, chapter: 2, chapterName: "Struktur Data", name: "Mengakses List", solution: { regex: /\w+\[\d+\]/ }, content: { title: "07. Mengakses List", h2: "Mengambil Item dari List", paragraphs: ["Sama seperti bahasa lain, item dalam list diakses menggunakan indeks, yang dimulai dari 0.", "<b>Contoh Pengerjaan:</b><code class='code-block'>kota = [\"Jakarta\", \"Surabaya\", \"Bandung\"]\nprint(kota[1])</code><b>Output Terminal:</b><code class='code-block'>Surabaya</code>"], instructions: "Akses item kedua ('anjing') dari list <code>hewan</code> yang telah Anda buat."}},
+            { id: 8, chapter: 2, chapterName: "Struktur Data", name: "Metode .append()", solution: { regex: /\w+\.append\s*\(/ }, content: { title: "08. Menambah ke List", h2: "Metode .append()", paragraphs: ["Anda dapat menambahkan item baru ke akhir list menggunakan metode <code>.append()</code>.", "<b>Contoh Pengerjaan:</b><code class='code-block'>belanja = [\"roti\"]\nbelanja.append(\"susu\")\nprint(belanja)</code><b>Output Terminal:</b><code class='code-block'>['roti', 'susu']</code>"], instructions: "Tambahkan 'ikan' ke dalam list <code>hewan</code>."}},
+            { id: 9, chapter: 2, chapterName: "Struktur Data", name: "Dictionary", solution: { regex: /\w+\s*=\s*\{.*:.*,.*:.*\}/ }, content: { title: "09. Dictionary", h2: "Pasangan Key-Value", paragraphs: ["Dictionary adalah kumpulan data yang tidak terurut yang disimpan sebagai pasangan kunci:nilai. Dibuat dengan kurung kurawal <code>{}</code>.", "<b>Contoh Pengerjaan:</b><code class='code-block'>data_diri = {\"nama\": \"Citra\", \"umur\": 22}\nprint(data_diri)</code><b>Output Terminal:</b><code class='code-block'>{'nama': 'Citra', 'umur': 22}</code>"], instructions: "Buat dictionary bernama <code>mobil</code> dengan key 'merek' bernilai 'Toyota' dan key 'tahun' bernilai 2021."}},
+            { id: 10, chapter: 2, chapterName: "Struktur Data", name: "Mengakses Dictionary", solution: { regex: /\w+\[["']\w+["']\]/ }, content: { title: "10. Mengakses Dictionary", h2: "Mengambil Nilai dari Key", paragraphs: ["Nilai dalam dictionary diakses menggunakan kuncinya, bukan indeks.", "<b>Contoh Pengerjaan:</b><code class='code-block'>data_diri = {\"nama\": \"Citra\", \"umur\": 22}\nprint(data_diri[\"nama\"])</code><b>Output Terminal:</b><code class='code-block'>Citra</code>"], instructions: "Akses nilai dari key 'merek' pada dictionary <code>mobil</code>."}},
+
+            // Chapter 3: Logika & Perulangan
+            { id: 11, chapter: 3, chapterName: "Logika & Perulangan", name: "Operator Perbandingan", solution: { regex: /if\s+\w+\s*==\s*["']\w+["']\s*:/ }, content: { title: "11. Operator Perbandingan", h2: "Membandingkan Nilai", paragraphs: ["Python menggunakan operator seperti <code>==</code> (sama dengan), <code>!=</code> (tidak sama dengan), <code>></code>, dan <code><</code> untuk membandingkan nilai.", "<b>Contoh Pengerjaan:</b><code class='code-block'>nilai = 80\nprint(nilai > 75)</code><b>Output Terminal:</b><code class='code-block'>True</code>"], instructions: "Gunakan pernyataan <code>if</code> untuk memeriksa apakah sebuah variabel <code>kata</code> sama dengan 'python'."}},
+            { id: 12, chapter: 3, chapterName: "Logika & Perulangan", name: "if...else", solution: { regex: /if\s+.*:\s*\n\s+.*\nelse:/s }, content: { title: "12. Pernyataan if...else", h2: "Dua Cabang Logika", paragraphs: ["Struktur <code>if...else</code> memungkinkan Anda menjalankan satu blok kode jika kondisi benar, dan blok lain jika salah. Perhatikan indentasi (spasi di awal baris)!", "<b>Contoh Pengerjaan:</b><code class='code-block'>suhu = 30\nif suhu > 28:\n    print(\"Cuaca panas\")\nelse:\n    print(\"Cuaca sejuk\")</code><b>Output Terminal:</b><code class='code-block'>Cuaca panas</code>"], instructions: "Buat pernyataan <code>if...else</code> yang memeriksa apakah <code>umur</code> lebih besar dari 17. Jika ya, cetak 'Dewasa', jika tidak, cetak 'Anak-anak'."}},
+            { id: 13, chapter: 3, chapterName: "Logika & Perulangan", name: "if...elif...else", solution: { regex: /if\s+.*:\s*\n\s+.*\nelif\s+.*:/s }, content: { title: "13. Pernyataan elif", h2: "Banyak Kondisi", paragraphs: ["Gunakan <code>elif</code> (singkatan dari else if) untuk memeriksa beberapa kondisi secara berurutan.", "<b>Contoh Pengerjaan:</b><code class='code-block'>nilai = 85\nif nilai >= 90:\n    print(\"A\")\nelif nilai >= 80:\n    print(\"B\")\nelse:\n    print(\"C\")</code><b>Output Terminal:</b><code class='code-block'>B</code>"], instructions: "Buat rantai <code>if-elif-else</code> untuk memeriksa variabel <code>skor</code>. Jika > 100 cetak 'Juara', jika > 50 cetak 'Bagus', selain itu cetak 'Coba lagi'."}},
+            { id: 14, chapter: 3, chapterName: "Logika & Perulangan", name: "Loop For", solution: { regex: /for\s+\w+\s+in\s+\w+\s*:/ }, content: { title: "14. Loop For", h2: "Iterasi Atas Item", paragraphs: ["Loop <code>for</code> di Python digunakan untuk melakukan iterasi (mengunjungi satu per satu) item dari sebuah urutan, seperti list.", "<b>Contoh Pengerjaan:</b><code class='code-block'>buah_buahan = [\"apel\", \"mangga\"]\nfor buah in buah_buahan:\n    print(buah)</code><b>Output Terminal:</b><code class='code-block'>apel\nmangga</code>"], instructions: "Gunakan loop <code>for</code> untuk mencetak setiap item dari sebuah list."}},
+            { id: 15, chapter: 3, chapterName: "Logika & Perulangan", name: "Fungsi range()", solution: { regex: /for\s+\w+\s+in\s+range\(\d+\)\s*:/ }, content: { title: "15. Loop dengan range()", h2: "Iterasi Berjumlah", paragraphs: ["Untuk menjalankan loop sebanyak jumlah tertentu, gunakan fungsi <code>range()</code>.", "<b>Contoh Pengerjaan:</b><code class='code-block'>for i in range(3):\n    print(f\"Putaran ke-{i+1}\")</code><b>Output Terminal:</b><code class='code-block'>Putaran ke-1\nPutaran ke-2\nPutaran ke-3</code>"], instructions: "Gunakan <code>range(5)</code> dalam sebuah loop <code>for</code> untuk mencetak angka dari 0 hingga 4."}},
+
+            // Chapter 4: Fungsi
+            { id: 16, chapter: 4, chapterName: "Fungsi", name: "Membuat Fungsi", solution: { regex: /def\s+\w+\(\s*\)\s*:/ }, content: { title: "16. Membuat Fungsi", h2: "Blok Kode Bernama", paragraphs: ["Fungsi adalah blok kode yang dapat digunakan kembali. Didefinisikan dengan kata kunci <code>def</code>.", "<b>Contoh Pengerjaan:</b><code class='code-block'>def sapa():\n    print(\"Halo dari dalam fungsi!\")\n\nsapa() # memanggil fungsi</code><b>Output Terminal:</b><code class='code-block'>Halo dari dalam fungsi!</code>"], instructions: "Buat sebuah fungsi sederhana bernama <code>ucapkan_selamat</code>."}},
+            { id: 17, chapter: 4, chapterName: "Fungsi", name: "Parameter", solution: { regex: /def\s+\w+\(\s*\w+\s*\)\s*:/ }, content: { title: "17. Parameter Fungsi", h2: "Memberi Input ke Fungsi", paragraphs: ["Fungsi dapat menerima data input yang disebut parameter. Parameter ditulis di dalam tanda kurung.", "<b>Contoh Pengerjaan:</b><code class='code-block'>def sapa_nama(nama):\n    print(f\"Halo, {nama}!\")\n\nsapa_nama(\"Eka\")</code><b>Output Terminal:</b><code class='code-block'>Halo, Eka!</code>"], instructions: "Ubah fungsi <code>ucapkan_selamat</code> agar menerima satu parameter bernama <code>nama</code>."}},
+            { id: 18, chapter: 4, chapterName: "Fungsi", name: "Return Value", solution: { regex: /def\s+.*\s*:\s*\n\s+return\s+/s }, content: { title: "18. Nilai Kembali", h2: "Mengembalikan Output", paragraphs: ["Fungsi dapat mengembalikan nilai menggunakan kata kunci <code>return</code>. Nilai ini kemudian bisa disimpan dalam variabel.", "<b>Contoh Pengerjaan:</b><code class='code-block'>def kuadrat(angka):\n    return angka * angka\n\nhasil = kuadrat(4)\nprint(hasil)</code><b>Output Terminal:</b><code class='code-block'>16</code>"], instructions: "Buat fungsi <code>tambah</code> yang menerima dua parameter dan mengembalikan hasil penjumlahannya."}},
+            { id: 19, chapter: 4, chapterName: "Fungsi", name: "Default Argument", solution: { regex: /def\s+\w+\(\s*\w+\s*=\s*.*,?\s*\)\s*:/ }, content: { title: "19. Argumen Default", h2: "Parameter Opsional", paragraphs: ["Anda dapat memberikan nilai default ke parameter. Jika saat pemanggilan fungsi argumen tidak diberikan, nilai default akan digunakan.", "<b>Contoh Pengerjaan:</b><code class='code-block'>def sapa(nama=\"Pengguna\"):\n    print(f\"Halo, {nama}\")\n\nsapa()\nsapa(\"Budi\")</code><b>Output Terminal:</b><code class='code-block'>Halo, Pengguna\nHalo, Budi</code>"], instructions: "Buat fungsi <code>daya</code> yang menerima parameter <code>volt</code> dan <code>ampere</code> dengan nilai default 5."}},
+        ];
+
+        let currentExerciseIndex = 0;
+        let progress = {};
+
+        function saveProgress() {
+            localStorage.setItem(localStorageKey, JSON.stringify(progress));
+        }
+
+        function loadProgress() {
+            progress = JSON.parse(localStorage.getItem(localStorageKey)) || {};
+        }
+
+        function updateSystemLog(message) {
+            UIElements.logMessage.textContent = `[Log Sistem]: ${message}`;
+        }
+        
+        function updateChapterProgress() {
+            const currentChapter = allExercises[currentExerciseIndex].chapter;
+            const exercisesInChapter = allExercises.filter(ex => ex.chapter === currentChapter);
+            const completedInChapter = exercisesInChapter.filter(ex => progress[ex.id]?.isCompleted).length;
+            const chapterProgress = (completedInChapter / exercisesInChapter.length) * 100;
+            UIElements.progressFill.style.width = `${chapterProgress}%`;
+            UIElements.progressPercent.textContent = `${Math.round(chapterProgress)}%`;
+        }
+        
+        function loadExercise(index) {
+            currentExerciseIndex = index;
+            const exercise = allExercises[index];
+            UIElements.breadcrumb.textContent = `Python / ${exercise.chapterName}`;
+            UIElements.instructionsPanel.innerHTML = `<h1>${exercise.content.title}</h1><h2>${exercise.content.h2}</h2>${exercise.content.paragraphs.map(p => `<p>${p}</p>`).join('')}<h2>Instruksi</h2><p>${exercise.content.instructions}</p>`;
+            UIElements.codeEditor.value = progress[exercise.id]?.userCode || commentText;
+            updateChapterProgress();
+            runCode();
+            updateLineNumbers();
+            UIElements.backBtn.disabled = index === 0;
+            const isLastExercise = index === allExercises.length - 1;
+            const isCompleted = progress[exercise.id]?.isCompleted || false;
+            UIElements.nextBtn.disabled = !isLastExercise && !isCompleted;
+            UIElements.nextBtn.textContent = (isLastExercise && isCompleted) ? "Selesai" : "Lanjut";
+            updateSystemLog(`Memuat Latihan ${exercise.id}: ${exercise.name}.`);
+        }
+
+        function updateLineNumbers() {
+            const lines = UIElements.codeEditor.value.split('\n').length;
+            UIElements.lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => `<div>${i + 1}</div>`).join('');
+        }
+
+        function validateCode(userInput) {
+            const exercise = allExercises[currentExerciseIndex];
+            const solution = exercise.solution;
+            if (!solution.regex) return false;
+
+            let codeToTest = userInput;
+            
+            if (!solution.validateWithComments) {
+                codeToTest = userInput.replace(/#.*$/gm, '');
+            }
+
+            return solution.regex.test(codeToTest);
+        }
+
+        // PERBAIKAN: Fungsi runCode() yang lebih baik
+        function runCode() {
+            UIElements.terminalOutput.textContent = '';
+            const userCode = UIElements.codeEditor.value.replace(commentText, '').trim();
+            const lines = userCode.split('\n');
+            const variables = {};
+            const outputLines = [];
+
+            lines.forEach(line => {
+                try {
+                    // Coba deteksi assignment variabel: var = value
+                    const assignmentMatch = line.match(/^\s*(\w+)\s*=\s*(.*)/);
+                    if (assignmentMatch) {
+                        const varName = assignmentMatch[1];
+                        let varValue = assignmentMatch[2].trim();
+                        variables[varName] = varValue;
+                        return; // Lanjut ke baris berikutnya
+                    }
+                    
+                    // Coba deteksi print: print(...)
+                    const printMatch = line.match(/print\((.*)\)/);
+                    if (printMatch) {
+                        let content = printMatch[1].trim();
+                        let valueToPrint = content;
+
+                        // Cek apakah konten adalah variabel yang sudah disimpan
+                        if (variables[content]) {
+                           valueToPrint = variables[content];
+                        }
+
+                        // Hapus kutip jika itu string literal
+                        if ((valueToPrint.startsWith("'") && valueToPrint.endsWith("'")) || (valueToPrint.startsWith('"') && valueToPrint.endsWith('"'))) {
+                             valueToPrint = valueToPrint.slice(1, -1);
+                        }
+
+                        outputLines.push(valueToPrint);
+                    }
+                } catch (e) {
+                    // Abaikan error parsing sederhana
+                }
+            });
+
+            if (outputLines.length > 0) {
+                UIElements.terminalOutput.textContent = outputLines.join('\n');
+            } else if (userCode) {
+                UIElements.terminalOutput.textContent = `[Proses selesai tanpa output print]`;
+            }
+        }
+        
+        function submitAnswer() {
+            const currentId = allExercises[currentExerciseIndex].id;
+            progress[currentId] = { ...progress[currentId], userCode: UIElements.codeEditor.value };
+
+            if (validateCode(UIElements.codeEditor.value)) {
+                progress[currentId].isCompleted = true;
+                showFeedbackModal("Benar!", true);
+                updateSystemLog("Jawaban benar. Kerja bagus!");
+                if (currentExerciseIndex < allExercises.length - 1) {
+                    UIElements.nextBtn.disabled = false;
+                }
+                if(currentExerciseIndex === allExercises.length - 1) {
+                   UIElements.nextBtn.textContent = "Selesai";
+                   UIElements.nextBtn.disabled = false;
+                }
+            } else {
+                progress[currentId].isCompleted = false;
+                showFeedbackModal("Kurang Tepat", false);
+                updateSystemLog("Jawaban kurang tepat. Coba lagi.");
+            }
+            updateChapterProgress();
+            saveProgress();
+        }
+        
+        function showFeedbackModal(message, isSuccess) {
+            UIElements.modalTitle.textContent = message;
+            UIElements.modalContent.className = 'feedback-modal-content ' + (isSuccess ? 'success' : 'error');
+            UIElements.feedbackModal.style.display = 'flex';
+        }
+
+        function navigate(direction) {
+            progress[allExercises[currentExerciseIndex].id] = { ...progress[allExercises[currentExerciseIndex].id], userCode: UIElements.codeEditor.value };
+            saveProgress();
+            const newIndex = direction === 'next' ? currentExerciseIndex + 1 : currentExerciseIndex - 1;
+            if (newIndex >= 0 && newIndex < allExercises.length) {
+                loadExercise(newIndex);
+            } else if (newIndex === allExercises.length) {
+                window.location.href = "belajar-python.html";
+            }
+        }
+
+        // --- Event Listeners ---
+        UIElements.runBtn.addEventListener('click', runCode);
+        UIElements.submitBtn.addEventListener('click', submitAnswer);
+        UIElements.nextBtn.addEventListener('click', () => navigate('next'));
+        UIElements.backBtn.addEventListener('click', () => navigate('back'));
+        UIElements.codeEditor.addEventListener('input', updateLineNumbers);
+        UIElements.codeEditor.addEventListener('scroll', () => { 
+            if(UIElements.lineNumbers.scrollTop !== UIElements.codeEditor.scrollTop) {
+                UIElements.lineNumbers.scrollTop = UIElements.codeEditor.scrollTop;
+            }
+        });
+        UIElements.modalCloseBtn.addEventListener('click', () => { UIElements.feedbackModal.style.display = 'none'; });
+        
+        // --- Initial Load ---
+        loadProgress(); 
+        const urlParams = new URLSearchParams(window.location.search);
+        const exerciseId = parseInt(urlParams.get('exercise')) || 1;
+        const startIndex = allExercises.findIndex(e => e.id === exerciseId);
+        loadExercise(startIndex !== -1 ? startIndex : 0);
+    });
+
+
+    // di klik saat ukuran hp
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    // reset tab
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // reset panels
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById(btn.dataset.target).classList.add('active');
+  });
+});
+
+// default tampil panel pertama
+document.getElementById('instructions-panel').classList.add('active');
+    </script>
+</body>
+</html>

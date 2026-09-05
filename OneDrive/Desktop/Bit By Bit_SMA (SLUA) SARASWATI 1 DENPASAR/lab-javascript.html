@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab JavaScript - Coding Learn</title>
+    <link rel="website" type="png" href="/img/logo versi 2.png">
+
+     <!-- font -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark-primary: #0E1623;
+            --bg-dark-secondary: #121C2D;
+            --bg-editor: #1A2841;
+            --text-primary: #FFFFFF;
+            --text-secondary: #a0aec0;
+            --border-color: #2d3748;
+            --yellow: #ffc700;
+            --green: #4ade80;
+            --red: #f87171;
+            --blue: #3b82f6;
+            --pixel-yellow-border: #c58d0d;
+            --pixel-yellow-shadow: #946300;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg-dark-primary);
+            color: var(--text-primary);
+            font-family: 'Source Code Pro', monospace;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* loading logo mulai */
+        #preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0e1623;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  #logo {
+    width: 150px;
+    position: relative;
+    z-index: 2;
+  }
+
+  @media (max-width: 600px) {
+    #logo {
+      width: 120px;
+    }
+  }
+  /* loading logo akhir */
+
+
+
+
+
+        .lab-header {
+            display: flex; align-items: center; padding: 1rem 2rem; background-color: var(--bg-dark-secondary); border-bottom: 2px solid var(--border-color); flex-shrink: 0;
+        }
+        .lab-header .brand {
+            font-family: 'Source Code Pro', monospace; font-size: 1.2rem; color: var(--yellow); text-decoration: none;
+        }
+        .lab-header .breadcrumb {
+            margin-left: 2rem; color: var(--text-secondary);
+        }
+        .lab-header .progress-bar-container {
+            display: flex; align-items: center; margin-left: 1rem; flex-grow: 1; max-width: 200px;
+        }
+        .lab-header .progress-bar {
+            width: 100%; height: 10px; background-color: var(--bg-editor); border-radius: 5px; overflow: hidden;
+        }
+        .lab-header .progress-bar-fill {
+            height: 100%; background-color: var(--green); border-radius: 5px; transition: width 0.3s ease;
+        }
+        .lab-header .progress-percent {
+            margin-left: 0.75rem; font-size: 0.9rem; font-weight: bold;
+        }
+        .lab-main {
+            display: grid; grid-template-columns: 1fr 1.2fr 1fr; height: calc(100vh - 120px); gap: 2px; background-color: var(--border-color); padding: 2px;
+        }
+        .panel {
+            background-color: var(--bg-dark-secondary); padding: 1.5rem; overflow-y: auto;
+        }
+        .panel-instructions h1 {
+            font-family: 'Source Code Pro', monospace; font-size: 1.8rem; margin-bottom: 2rem; line-height: 1.4;
+        }
+        .panel-instructions h2 {
+            font-family: 'Source Code Pro', monospace; font-size: 1.2rem; color: var(--yellow); margin-bottom: 1rem; margin-top: 2rem;
+        }
+        .panel-instructions p {
+            color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;
+        }
+        .panel-instructions code {
+            background-color: var(--bg-editor); padding: 2px 6px; border-radius: 4px; font-weight: bold;
+        }
+        .panel-instructions .code-block { 
+            display: block; 
+            background-color: var(--bg-editor); 
+            padding: 0.75rem 1rem; 
+            margin-top: 0.5rem; 
+            margin-bottom: 1rem;
+            border-radius: 6px; 
+            white-space: pre-wrap;
+            line-height: 1.5;
+            font-weight: normal;
+            border-left: 3px solid var(--yellow);
+        }
+        .panel-instructions b { 
+            color: var(--yellow); 
+            font-weight: normal;
+        }
+        .panel-editor {
+            display: flex; flex-direction: column; background-color: var(--bg-editor); padding: 0;
+        }
+        .editor-header {
+            padding: 0.75rem 1.5rem; background-color: var(--bg-dark-secondary); font-weight: bold; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .editor-header i { color: #f7df1e; }
+        .editor-area { display: flex; flex-grow: 1; position: relative; }
+        #line-numbers {
+            padding: 1rem 0.75rem 1rem 1.5rem; font-size: 1rem; color: var(--text-secondary); text-align: right; user-select: none; line-height: 1.5;
+        }
+        #code-editor {
+            flex-grow: 1; width: 100%; background-color: transparent; border: none; color: var(--text-primary); font-family: 'Source Code Pro', monospace; font-size: 1rem; padding: 1rem; resize: none; line-height: 1.5;
+        }
+        #code-editor:focus { outline: none; }
+        .editor-controls {
+            padding: 1rem 1.5rem; background-color: var(--bg-dark-secondary); display: flex; gap: 1rem;
+        }
+        .editor-btn {
+            font-family: 'Source Code Pro', monospace; padding: 0.75rem 1.5rem; font-size: 0.9rem; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.2s;
+        }
+        .btn-run { background-color: #2563eb; color: white; }
+        .btn-run:hover { background-color: #3b82f6; }
+        .btn-submit { background-color: transparent; color: var(--text-secondary); border: 2px solid var(--border-color); }
+        .btn-submit:hover { background-color: var(--border-color); color: var(--text-primary); }
+        .panel-output {
+            padding: 0; background-color: var(--bg-dark-primary); display: flex; flex-direction: column;
+        }
+        .output-header {
+            padding: 0.75rem 1.5rem; background-color: var(--bg-dark-secondary); font-weight: bold; display: flex; justify-content: space-between; align-items: center;
+        }
+        #output-frame {
+            width: 100%; height: 100%; border: none; flex-grow: 1; background-color: #1a2841; padding: 1rem; color: white; font-family: 'Source Code Pro', monospace; overflow-y: auto;
+        }
+        .lab-footer {
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background-color: var(--bg-dark-secondary); border-top: 2px solid var(--border-color); flex-shrink: 0;
+        }
+        .system-log {
+            font-family: 'Source Code Pro', monospace; color: var(--text-secondary); font-size: 0.9rem;
+        }
+        .system-log .cursor {
+            display: inline-block; background-color: var(--green); margin-left: 5px; width: 10px; height: 1em; animation: blink 1s infinite; vertical-align: middle;
+        }
+        @keyframes blink { 0%, 49% { opacity: 0; } 50%, 99% { opacity: 1; } 100% { opacity: 0; } }
+        .nav-buttons .pixel-btn { padding: 0.75rem 2rem; font-size: 1rem; }
+        .pixel-btn {
+            font-family: 'Source Code Pro', monospace; text-decoration: none; cursor: pointer; border: 4px solid; position: relative; top: 0; transition: all 0.1s ease-in-out; border-radius: 8px;
+        }
+        .pixel-btn:active { top: 6px; box-shadow: none; }
+        .pixel-btn.yellow {
+            background-color: var(--yellow); color: var(--bg-dark-primary); border-color: var(--pixel-yellow-border); box-shadow: 0 6px 0 0 var(--pixel-yellow-shadow);
+        }
+        .pixel-btn.gray { background-color: #4b5563; color: var(--text-secondary); border-color: #1f2937; box-shadow: 0 6px 0 0 #111827; }
+        .pixel-btn:disabled {
+            background-color: #374151; color: #6b7280; border-color: #1f2937; box-shadow: 0 6px 0 0 #111827; cursor: not-allowed; top: 0;
+        }
+        .pixel-btn:disabled:active { top: 0; }
+        .feedback-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none; justify-content: center; align-items: center; z-index: 1000;
+        }
+        .feedback-modal-content {
+            background-color: var(--bg-dark-secondary);
+            border: 2px solid var(--border-color);
+            padding: 2.5rem 3rem;
+            text-align: center;
+            font-family: 'Source Code Pro', monospace;
+            box-shadow: 0 10px 0 0 #000;
+        }
+        .feedback-modal-content h3 { font-size: 1.5rem; margin-bottom: 1.5rem; }
+        .feedback-modal-content.success h3 { color: var(--green); }
+        .feedback-modal-content.error h3 { color: var(--red); }
+
+        /* Chapter Complete Modal Styles */
+        .chapter-complete-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(14, 22, 35, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .chapter-complete-content {
+            text-align: center;
+            max-width: 600px;
+            animation: slideUp 0.5s ease forwards;
+        }
+        .chapter-complete-content h1 {
+            font-family: 'Source Code Pro', monospace;
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+        .chapter-complete-content p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        .avatar-container {
+            margin-bottom: 2rem;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+        .stat-box {
+            background-color: var(--bg-dark-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .stat-box .label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .stat-box .value {
+           font-family: 'Source Code Pro', monospace;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+        }
+        .stat-box .fa-star { color: var(--yellow); }
+        .stat-box .fa-award { color: var(--green); }
+        .continue-btn {
+            background-color: var(--blue);
+            color: white;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            border-color: #1e40af;
+            box-shadow: 0 6px 0 0 #1e3a8a;
+        }
+
+        /* Party Popper Animation */
+        .popper-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 3000;
+            display: none;
+            pointer-events: none;
+        }
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 16px;
+            background: #f00;
+            top: -20px;
+            animation: fall 3s linear forwards;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+
+        /* --- MOBILE (max-width: 1024px) --- */
+@media screen and (max-width: 1024px) {
+  
+  .lab-main {
+    display: block;
+    height: auto;
+  }
+
+
+  .lab-main {
+    flex: 1;
+    overflow-y: auto;  
+    min-height: 0; 
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 80px);
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .panel {
+    flex: 1;
+    overflow: auto;
+  }
+
+  
+  .lab-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0.6rem;    
+    background-color: var(--bg-dark-secondary);
+    border-top: 2px solid var(--border-color);
+    z-index: 10;
+  }
+
+  .lab-footer button {
+    font-size: 0.7rem;          
+    padding: 0.3rem 0.6rem;    
+    border-radius: 4px;
+  }
+
+  
+  .panel {
+    display: none;
+    height: auto;
+  }
+
+
+  .panel.active {
+    display: block;
+  }
+
+  
+  .lab-tabs {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--bg-dark-secondary);
+    border-bottom: 2px solid var(--border-color);
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-family: 'Press Start 2P', cursive;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .tab-btn.active {
+    border-bottom: 3px solid var(--yellow);
+    color: var(--yellow);
+  }
+
+  
+  .lab-header {
+    flex-wrap: nowrap;
+    gap: 1rem;
+  }
+
+  .lab-header .brand img {
+    height: 32px;
+    width: auto;
+    vertical-align: middle;
+  }
+
+  .lab-header .breadcrumb {
+    margin-left: 0;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+
+  .lab-footer .pixel-btn {
+    font-size: 0.65rem;       
+    padding: 0.35rem 0.7rem;  
+    border-width: 2px;        
+    border-radius: 4px;      
+  }
+
+   
+}
+
+
+
+/* --- DESKTOP (min-width: 1025px) --- */
+@media screen and (min-width: 1025px) {
+  .lab-header .brand img {
+    height: 48px;  
+    width: auto;
+    vertical-align: middle;
+  }
+
+  .lab-header .breadcrumb {
+    margin-left: 1.5rem;
+    font-size: 1rem;
+  }
+
+  .lab-tabs {
+    display: none;
+  }
+}
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Preloader -->
+  <div id="preloader">
+    <img id="logo" src="/img/logo versi 2.png" alt="Logo">
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script>
+    let tl = gsap.timeline();
+
+    // 1. Logo muncul (zoom in dari kecil ke normal)
+    tl.from("#logo", {
+      duration: 1.5,
+      scale: 0,
+      opacity: 0,
+      ease: "elastic.out(1, 0.5)"
+    });
+
+    // 2. Hilangkan preloader setelah beberapa saat
+    tl.to("#preloader", {
+      delay: 1,
+      duration: 1,
+      opacity: 0,
+      onComplete: () => {
+        document.getElementById("preloader").style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+    });
+  </script>
+
+    <header class="lab-header">
+        <a href="belajar-javascript.html" class="brand">
+              <img src="/img/logo revisi 2.png" alt="logo">
+        </a>
+        <div class="breadcrumb" id="breadcrumb">JavaScript / ...</div>
+        <div class="progress-bar-container">
+            <div class="progress-bar"><div class="progress-bar-fill" id="progress-fill"></div></div>
+            <span class="progress-percent" id="progress-percent">0%</span>
+        </div>
+    </header>
+
+    <!-- saat ukuran hp -->
+    <div class="lab-tabs">
+<button class="tab-btn active" data-target="instructions-panel">Learn</button>
+<button class="tab-btn" data-target="code-panel">Code</button>
+<button class="tab-btn" data-target="output-panel">Output</button>
+</div>
+
+    <main class="lab-main">
+        <div class="panel panel-instructions" id="instructions-panel"></div>
+        <div class="panel panel-editor" id="code-panel">
+            <div class="editor-header"><i class="fa-brands fa-js"></i><span>script.js</span></div>
+            <div class="editor-area">
+                <div id="line-numbers"></div>
+                <textarea id="code-editor" spellcheck="false"></textarea>
+            </div>
+            <div class="editor-controls">
+                <button class="editor-btn btn-run" id="run-btn">Jalankan</button>
+                <button class="editor-btn btn-submit" id="submit-btn">Kirim Jawaban</button>
+            </div>
+        </div>
+        <div class="panel panel-output" id="output-panel">
+            <div class="output-header">
+                <span>Konsol Output</span>
+            </div>
+            <div id="output-frame"></div>
+        </div>
+    </main>
+
+    <footer class="lab-footer">
+        <div class="system-log">
+            <span id="log-message">[Log Sistem]: Memulai...</span><span class="cursor"></span>
+        </div>
+        <div class="nav-buttons">
+            <button class="pixel-btn gray" id="back-btn">Kembali</button>
+            <button class="pixel-btn yellow" id="next-btn">Lanjut</button>
+        </div>
+    </footer>
+    
+    <div class="feedback-modal-overlay" id="feedback-modal">
+        <div class="feedback-modal-content" id="modal-content">
+            <h3 id="modal-title"></h3>
+            <button class="pixel-btn yellow" id="modal-close-btn">Lanjutkan</button>
+        </div>
+    </div>
+
+    <!-- Chapter Complete Modal -->
+    <div class="chapter-complete-overlay" id="chapter-complete-modal">
+        <div class="chapter-complete-content">
+            <h1 id="chapter-complete-title">Chapter 1 Selesai!</h1>
+            <p id="chapter-complete-text">Kerja bagus! Kamu telah menguasai dasar-dasar. Teruslah melangkah, petualangan koding menantimu!</p>
+            <div class="avatar-container">
+                <svg width="80" height="80" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style="image-rendering: pixelated;">
+                    <rect x="7" y="2" width="6" height="1" fill="#3D2B24"/>
+                    <rect x="6" y="3" width="8" height="1" fill="#CF6B34"/>
+                    <rect x="5" y="4" width="10" height="2" fill="#F5C8A6"/>
+                    <rect x="5" y="6" width="1" height="1" fill="#3D2B24"/>
+                    <rect x="8" y="6" width="1" height="1" fill="#3D2B24"/>
+                    <rect x="11" y="6" width="1" height="1" fill="#3D2B24"/>
+                    <rect x="14" y="6" width="1" height="1" fill="#3D2B24"/>
+                    <rect x="5" y="7" width="10" height="1" fill="#F5C8A6"/>
+                    <rect x="8" y="8" width="4" height="1" fill="#F5C8A6"/>
+                    <rect x="6" y="9" width="8" height="1" fill="#4A90E2"/>
+                    <rect x="5" y="10" width="10" height="4" fill="#4A90E2"/>
+                    <rect x="7" y="10" width="1" height="1" fill="#F5C8A6"/>
+                    <rect x="12" y="10" width="1" height="1" fill="#F5C8A6"/>
+                    <rect x="5" y="14" width="2" height="1" fill="#3D2B24"/><rect x="13" y="14" width="2" height="1" fill="#3D2B24"/>
+                    <rect x="7" y="14" width="6" height="2" fill="#D4A179"/>
+                    <rect x="7" y="16" width="2" height="2" fill="#3D2B24"/><rect x="11" y="16" width="2" height="2" fill="#3D2B24"/>
+                </svg>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="label"><i class="fas fa-star"></i> XP DI CHAPTER INI</div>
+                    <div class="value" id="chapter-xp-value">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label"><i class="fas fa-star"></i> TOTAL XP</div>
+                    <div class="value" id="total-xp-value">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label"><i class="fas fa-award"></i> LEVEL SAAT INI</div>
+                    <div class="value" id="level-value">1</div>
+                </div>
+            </div>
+            <button class="pixel-btn continue-btn" id="chapter-continue-btn">Lanjutkan</button>
+        </div>
+    </div>
+    
+    <div class="popper-container" id="popper-container"></div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const UIElements = {
+            // ... (elemen UI lainnya)
+            codeEditor: document.getElementById('code-editor'),
+            outputFrame: document.getElementById('output-frame'),
+            runBtn: document.getElementById('run-btn'),
+            submitBtn: document.getElementById('submit-btn'),
+            lineNumbers: document.getElementById('line-numbers'),
+            instructionsPanel: document.getElementById('instructions-panel'),
+            breadcrumb: document.getElementById('breadcrumb'),
+            progressFill: document.getElementById('progress-fill'),
+            progressPercent: document.getElementById('progress-percent'),
+            logMessage: document.getElementById('log-message'),
+            nextBtn: document.getElementById('next-btn'),
+            backBtn: document.getElementById('back-btn'),
+            feedbackModal: document.getElementById('feedback-modal'),
+            modalContent: document.getElementById('modal-content'),
+            modalTitle: document.getElementById('modal-title'),
+            modalCloseBtn: document.getElementById('modal-close-btn'),
+            chapterCompleteModal: document.getElementById('chapter-complete-modal'),
+            chapterCompleteTitle: document.getElementById('chapter-complete-title'),
+            chapterXpValue: document.getElementById('chapter-xp-value'),
+            totalXpValue: document.getElementById('total-xp-value'),
+            levelValue: document.getElementById('level-value'),
+            chapterContinueBtn: document.getElementById('chapter-continue-btn'),
+            popperContainer: document.getElementById('popper-container'),
+        };
+
+        const commentText = '// Tulis kode di bawah ini ❤️';
+        const localStorageKey = 'jsLabProgress';
+
+        const allExercises = [
+             // Chapter 1
+            { id: 1, chapter: 1, chapterName: "Dasar-Dasar & Tipe Data", name: "Hello, World!", solution: { regex: /console\.log\s*\(\s*["']Hello, World!["']\s*\)/ }, content: { title: "01. Hello, World!", h2: "Perintah Pertama", paragraphs: ["<code>console.log()</code> adalah cara untuk menampilkan output di konsol JavaScript. Ini sangat berguna untuk debugging dan melihat hasil kodemu.", "<b>Contoh Pengerjaan:</b><code class='code-block'>console.log(\"Selamat Datang!\");</code><b>Contoh Output:</b><code class='code-block'>> Selamat Datang!</code>"], instructions: "Tampilkan teks 'Hello, World!' ke konsol menggunakan <code>console.log()</code>."}},
+            { id: 2, chapter: 1, chapterName: "Dasar-Dasar & Tipe Data", name: "Komentar Kode", solution: { regex: /\/\/.+/, validateWithComments: true }, content: { title: "02. Komentar", h2: "Meninggalkan Catatan", paragraphs: ["Komentar adalah baris kode yang diabaikan oleh JavaScript. Mereka digunakan untuk meninggalkan catatan untuk dirimu sendiri atau developer lain. Komentar satu baris dimulai dengan <code>//</code>.", "<b>Contoh Pengerjaan:</b><code class='code-block'>// Kode ini akan diabaikan\nlet skor = 100; // Inisialisasi skor</code><b>Contoh Output:</b><code class='code-block'>(Tidak ada output, karena komentar tidak dieksekusi)</code>"], instructions: "Tulis komentar satu baris apa pun di editor."}},
+            { id: 3, chapter: 1, chapterName: "Dasar-Dasar & Tipe Data", name: "Variabel const & let", solution: { regex: /(let\s+\w+\s*=\s*.+;|const\s+\w+\s*=\s*.+;)/ }, content: { title: "03. const & let", h2: "Variabel Modern", paragraphs: ["ES6 memperkenalkan <code>let</code> dan <code>const</code>. <code>let</code> adalah variabel yang nilainya bisa diubah, sementara <code>const</code> adalah konstanta yang nilainya tidak bisa diubah setelah ditetapkan. Ini adalah cara yang lebih disarankan daripada <code>var</code>.", "<b>Contoh Pengerjaan:</b><code class='code-block'>let umur = 25;\nconst TANGGAL_LAHIR = \"20-04-1999\";\n\nconsole.log(umur);\nconsole.log(TANGGAL_LAHIR);</code><b>Contoh Output:</b><code class='code-block'>> 25\n> 20-04-1999</code>"], instructions: "Buat satu variabel bernama <code>skor</code> menggunakan <code>let</code> dan satu konstanta bernama <code>NAMA_PEMAIN</code> menggunakan <code>const</code>."}},
+            { id: 4, chapter: 1, chapterName: "Dasar-Dasar & Tipe Data", name: "Tipe Data: String", solution: { regex: /let\s+\w+\s*=\s*["'].*["'];/ }, content: { title: "04. String", h2: "Data Teks", paragraphs: ["String adalah urutan karakter yang digunakan untuk menyimpan teks. String harus ditulis di dalam tanda kutip tunggal (<code>''</code>) atau ganda (<code>\"\"</code>).", "<b>Contoh Pengerjaan:</b><code class='code-block'>let salam = \"Selamat Pagi\";\nconsole.log(salam);</code><b>Contoh Output:</b><code class='code-block'>> Selamat Pagi</code>"], instructions: "Buat variabel bernama <code>kota</code> dan berikan nilai string (nama kota)."}},
+            { id: 5, chapter: 1, chapterName: "Dasar-Dasar & Tipe Data", name: "Tipe Data: Number", solution: { regex: /let\s+\w+\s*=\s*\d+;/ }, content: { title: "05. Number", h2: "Data Numerik", paragraphs: ["JavaScript juga memiliki tipe data angka (Number), yang dapat berupa bilangan bulat atau desimal. Angka tidak memerlukan tanda kutip.", "<b>Contoh Pengerjaan:</b><code class='code-block'>let harga = 50000;\nlet diskon = 0.5;\nconsole.log(harga * diskon);</code><b>Contoh Output:</b><code class='code-block'>> 25000</code>"], instructions: "Buat variabel bernama <code>umur</code> dan berikan nilai berupa angka."}},
+            { id: 6, chapter: 1, chapterName: "Dasar-Dasar & Tipe Data", name: "Tipe Data: Boolean", solution: { regex: /let\s+\w+\s*=\s*(true|false);/ }, content: { title: "06. Boolean", h2: "Benar atau Salah", paragraphs: ["Tipe data Boolean hanya memiliki dua nilai: <code>true</code> (benar) atau <code>false</code> (salah). Ini sering menjadi hasil dari operasi perbandingan.", "<b>Contoh Pengerjaan:</b><code class='code-block'>let sudahMakan = true;\nconsole.log(sudahMakan);</code><b>Contoh Output:</b><code class='code-block'>> true</code>"], instructions: "Buat variabel <code>isLogin</code> dan berikan nilai <code>true</code>."}},
+            { id: 7, chapter: 1, chapterName: "Dasar-Dasar & Tipe Data", name: "Penggabungan String", solution: { regex: /console\.log\s*\(\s*["'].*["']\s*\+\s*\w+\s*\)/ }, content: { title: "07. Penggabungan", h2: "Menggabungkan Teks", paragraphs: ["Kamu dapat menggabungkan dua string atau lebih menggunakan operator <code>+</code>.", "<b>Contoh Pengerjaan:</b><code class='code-block'>let kata1 = \"Coding\";\nlet kata2 = \"Menyenangkan\";\nconsole.log(kata1 + \" itu \" + kata2);</code><b>Contoh Output:</b><code class='code-block'>> Coding itu Menyenangkan</code>"], instructions: "Buat variabel <code>nama</code>, lalu gabungkan string 'Halo, ' dengan variabel <code>nama</code> dan tampilkan hasilnya."}},
+            { id: 8, chapter: 1, chapterName: "Dasar-Dasar & Tipe Data", name: "Template Literals", solution: { regex: /`.*\$\{.+\}.*`/ }, content: { title: "08. Template Literals", h2: "String Canggih", paragraphs: ["Template literals menggunakan back-ticks (<code>``</code>) alih-alih tanda kutip. Ini memungkinkan Anda menyisipkan variabel atau ekspresi langsung ke dalam string menggunakan sintaks <code>${...}</code>, membuatnya lebih mudah dibaca.", "<b>Contoh Pengerjaan:</b><code class='code-block'>let barang = \"Buku\";\nlet jumlah = 5;\nconsole.log(`Saya membeli ${jumlah} ${barang}.`);</code><b>Contoh Output:</b><code class='code-block'>> Saya membeli 5 Buku.</code>"], instructions: "Gunakan template literal untuk membuat kalimat 'User [nama] berumur [umur] tahun.' dengan memasukkan variabel <code>nama</code> dan <code>umur</code>."}},
+            // Chapter 2
+            { id: 9, chapter: 2, chapterName: "Operator & Logika Kondisional", name: "Operator Aritmatika", solution: { regex: /\d+\s*[\+\-\*\/]\s*\d+/ }, content: { title: "09. Aritmatika", h2: "Operasi Matematika", paragraphs: ["JavaScript mendukung operator aritmatika dasar seperti penjumlahan (<code>+</code>), pengurangan (<code>-</code>), perkalian (<code>*</code>), dan pembagian (<code>/</code>).", "<b>Contoh Pengerjaan:</b><code class='code-block'>let panjang = 20;\nlet lebar = 5;\nlet luas = panjang * lebar;\nconsole.log(luas);</code><b>Contoh Output:</b><code class='code-block'>> 100</code>"], instructions: "Kalikan 10 dengan 5 dan simpan hasilnya dalam variabel <code>hasil</code>."}},
+            { id: 10, chapter: 2, chapterName: "Operator & Logika Kondisional", name: "Operator Modulo", solution: { regex: /\d+\s*%\s*\d+/ }, content: { title: "10. Operator Modulo", h2: "Sisa Bagi", paragraphs: ["Operator modulo (<code>%</code>) mengembalikan sisa dari pembagian. Ini sangat berguna, misalnya, untuk menentukan apakah sebuah angka genap atau ganjil.", "<b>Contoh Pengerjaan:</b><code class='code-block'>let angka = 7;\nlet sisa = angka % 2;\nconsole.log(sisa); // Hasil 1, berarti ganjil</code><b>Contoh Output:</b><code class='code-block'>> 1</code>"], instructions: "Gunakan operator modulo untuk menemukan sisa dari 10 dibagi 3."}},
+            { id: 11, chapter: 2, chapterName: "Operator & Logika Kondisional", name: "Operator Perbandingan", solution: { regex: /.+\s*(===|!==|>|<|>=|<=)\s*.+/ }, content: { title: "11. Perbandingan", h2: "Membandingkan Nilai", paragraphs: ["Operator perbandingan digunakan untuk membandingkan dua nilai dan hasilnya selalu boolean (<code>true</code> atau <code>false</code>). Gunakan <code>===</code> untuk memeriksa kesamaan nilai DAN tipe data.", "<b>Contoh Pengerjaan:</b><code class='code-block'>let a = 5;\nlet b = 5;\nconsole.log(a === b);</code><b>Contoh Output:</b><code class='code-block'>> true</code>"], instructions: "Bandingkan apakah angka <code>10</code> lebih besar dari <code>5</code> dan tampilkan hasilnya ke konsol."}},
+            { id: 12, chapter: 2, chapterName: "Operator & Logika Kondisional", name: "Pernyataan If", solution: { regex: /if\s*\(\s*.*\s*\)\s*\{/ }, content: { title: "12. Pernyataan If", h2: "Membuat Keputusan", paragraphs: ["Pernyataan <code>if</code> digunakan untuk menjalankan blok kode hanya jika kondisi tertentu terpenuhi (bernilai <code>true</code>).", "<b>Contoh Pengerjaan:</b><code class='code-block'>let jam = 14;\nif (jam > 12) {\n  console.log(\"Selamat Siang!\");\n}</code><b>Contoh Output:</b><code class='code-block'>> Selamat Siang!</code>"], instructions: "Buat pernyataan <code>if</code> yang memeriksa apakah variabel <code>nilai</code> lebih besar dari 75."}},
+            { id: 13, chapter: 2, chapterName: "Operator & Logika Kondisional", name: "If...Else", solution: { regex: /if\s*\(.+\)\s*\{[\s\S]*\}\s*else\s*\{/ }, content: { title: "13. If...Else", h2: "Dua Kemungkinan", paragraphs: ["Gunakan <code>else</code> untuk menentukan blok kode yang akan dijalankan jika kondisi dalam pernyataan <code>if</code> tidak terpenuhi (bernilai <code>false</code>).", "<b>Contoh Pengerjaan:</b><code class='code-block'>let baterai = 15;\nif (baterai > 20) {\n  console.log(\"Baterai cukup.\");\n} else {\n  console.log(\"Baterai lemah, harap isi daya!\");\n}</code><b>Contoh Output:</b><code class='code-block'>> Baterai lemah, harap isi daya!</code>"], instructions: "Buat struktur <code>if...else</code>. Jika <code>umur</code> di atas 17, tampilkan 'Dewasa'. Jika tidak, tampilkan 'Anak-anak'."}},
+            { id: 14, chapter: 2, chapterName: "Operator & Logika Kondisional", name: "Operator Logika", solution: { regex: /.+\s*(&&|\|\|)\s*.+/ }, content: { title: "14. Logika && dan ||", h2: "Menggabungkan Kondisi", paragraphs: ["Operator logika seperti DAN (<code>&&</code>) dan ATAU (<code>||</code>) digunakan untuk menggabungkan beberapa kondisi. <code>&&</code> membutuhkan semua kondisi benar, sementara <code>||</code> hanya butuh salah satu benar.", "<b>Contoh Pengerjaan:</b><code class='code-block'>let punyaTiket = true;\nlet umur = 20;\nif (punyaTiket && umur > 17) {\n  console.log(\"Boleh masuk.\");\n}</code><b>Contoh Output:</b><code class='code-block'>> Boleh masuk.</code>"], instructions: "Gunakan operator <code>&&</code> dalam sebuah <code>if</code> untuk memeriksa apakah <code>nilaiUjian</code> di atas 80 DAN <code>absensi</code> di atas 90."}},
+            { id: 15, chapter: 2, chapterName: "Operator & Logika Kondisional", name: "Pernyataan Switch", solution: { regex: /switch\s*\(\s*\w+\s*\)\s*\{[\s\S]*case\s*.*\s*:/ }, content: { title: "15. Switch", h2: "Banyak Pilihan", paragraphs: ["Pernyataan <code>switch</code> adalah alternatif dari rantai <code>if-else if-else</code> yang panjang. Ini mengevaluasi sebuah ekspresi dan mencocokkan nilainya dengan klausa <code>case</code>.", "<b>Contoh Pengerjaan:</b><code class='code-block'>let level = \"Gold\";\nswitch (level) {\n  case \"Gold\":\n    console.log(\"Diskon 15%\");\n    break;\n  case \"Silver\":\n    console.log(\"Diskon 10%\");\n    break;\n  default:\n    console.log(\"Tidak ada diskon.\");\n}</code><b>Contoh Output:</b><code class='code-block'>> Diskon 15%</code>"], instructions: "Buat pernyataan <code>switch</code> untuk variabel <code>hari</code> yang dapat menangani kasus 'Senin' dan 'Minggu'."}},
+            // Chapter 3
+            { id: 16, chapter: 3, chapterName: "Array & Perulangan", name: "Membuat Array", solution: { regex: /const\s+\w+\s*=\s*\[.*,.*\];/ }, content: { title: "16. Membuat Array", h2: "Daftar Item", paragraphs: ["Array adalah variabel khusus yang dapat menampung lebih dari satu nilai sekaligus dalam urutan tertentu. Array dibuat dengan kurung siku <code>[]</code>.", "<b>Contoh Pengerjaan:</b><code class='code-block'>const warna = [\"Merah\", \"Kuning\", \"Hijau\"];\nconsole.log(warna);</code><b>Contoh Output:</b><code class='code-block'>> [\"Merah\",\"Kuning\",\"Hijau\"]</code>"], instructions: "Buat sebuah array bernama <code>buah</code> yang berisi 'Apel', 'Mangga', dan 'Jeruk'."}},
+            { id: 17, chapter: 3, chapterName: "Array & Perulangan", name: "Mengakses Elemen", solution: { regex: /\w+\[\d+\]/ }, content: { title: "17. Mengakses Elemen", h2: "Mengambil Item", paragraphs: ["Kamu dapat mengakses elemen array dengan merujuk pada nomor indeksnya. Indeks array dimulai dari 0, jadi elemen pertama adalah indeks 0, kedua adalah 1, dan seterusnya.", "<b>Contoh Pengerjaan:</b><code class='code-block'>const tim = [\"Budi\", \"Citra\", \"Eka\"];\nconsole.log(tim[0]); // Mengakses Budi</code><b>Contoh Output:</b><code class='code-block'>> Budi</code>"], instructions: "Akses 'Mangga' dari array <code>buah</code> yang sudah Anda buat dan tampilkan ke konsol."}},
+            { id: 18, chapter: 3, chapterName: "Array & Perulangan", name: "Properti .length", solution: { regex: /\w+\.length/ }, content: { title: "18. .length", h2: "Menghitung Item", paragraphs: ["Properti <code>.length</code> dari sebuah array mengembalikan jumlah elemen di dalam array tersebut.", "<b>Contoh Pengerjaan:</b><code class='code-block'>const belanjaan = [\"Roti\", \"Susu\", \"Keju\"];\nconsole.log(belanjaan.length);</code><b>Contoh Output:</b><code class='code-block'>> 3</code>"], instructions: "Gunakan <code>.length</code> untuk menemukan berapa banyak item di dalam array <code>buah</code>."}},
+            { id: 19, chapter: 3, chapterName: "Array & Perulangan", name: "Metode .push() & .pop()", solution: { regex: /\w+\.push\s*\(.+\)/ }, content: { title: "19. .push() & .pop()", h2: "Menambah & Menghapus", paragraphs: ["Metode <code>.push()</code> menambahkan elemen baru ke **akhir** sebuah array, sedangkan <code>.pop()</code> menghapus elemen **terakhir**.", "<b>Contoh Pengerjaan:</b><code class='code-block'>const angka = [10, 20];\nangka.push(30);\nconsole.log(angka);</code><b>Contoh Output:</b><code class='code-block'>> [10,20,30]</code>"], instructions: "Tambahkan 'Durian' ke array <code>buah</code> menggunakan <code>.push()</code>."}},
+            { id: 20, chapter: 3, chapterName: "Array & Perulangan", name: "Loop For", solution: { regex: /for\s*\(\s*let\s+i\s*=\s*0;\s*i\s*<\s*\w*\.?\w+;\s*i\+\+\s*\)\s*\{/ }, content: { title: "20. Loop For", h2: "Pengulangan Terhitung", paragraphs: ["Loop <code>for</code> mengulangi blok kode sebanyak jumlah yang ditentukan. Ini adalah cara paling umum untuk melakukan iterasi pada array.", "<b>Contoh Pengerjaan:</b><code class='code-block'>for (let i = 1; i <= 3; i++) {\n  console.log(\"Putaran ke-\" + i);\n}</code><b>Contoh Output:</b><code class='code-block'>> Putaran ke-1\n> Putaran ke-2\n> Putaran ke-3</code>"], instructions: "Gunakan loop <code>for</code> untuk menampilkan setiap buah dari array <code>buah</code> ke konsol, satu per satu."}},
+            { id: 21, chapter: 3, chapterName: "Array & Perulangan", name: "Loop For...Of", solution: { regex: /for\s*\(\s*const\s+\w+\s+of\s+\w+\s*\)\s*\{/ }, content: { title: "21. Loop For...Of", h2: "Iterasi Modern", paragraphs: ["Loop <code>for...of</code> adalah cara yang lebih modern dan lebih mudah dibaca untuk melakukan iterasi pada item-item dari objek yang dapat diulang (seperti array).", "<b>Contoh Pengerjaan:</b><code class='code-block'>const hewan = [\"Kucing\", \"Anjing\"];\nfor (const h of hewan) {\n  console.log(h);\n}</code><b>Contoh Output:</b><code class='code-block'>> Kucing\n> Anjing</code>"], instructions: "Gunakan loop <code>for...of</code> untuk menampilkan setiap item dalam array <code>buah</code>."}},
+            { id: 22, chapter: 3, chapterName: "Array & Perulangan", name: "Metode .forEach()", solution: { regex: /\w+\.forEach\s*\(\s*function\s*\(.*\)\s*\{/s }, content: { title: "22. .forEach()", h2: "Iterasi Fungsional", paragraphs: ["Metode <code>.forEach()</code> mengeksekusi fungsi yang disediakan sekali untuk setiap elemen array. Ini adalah alternatif lain yang populer untuk loop <code>for</code>.", "<b>Contoh Pengerjaan:</b><code class='code-block'>const angka = [1, 2, 3];\nangka.forEach(function(n) {\n  console.log(\"Angka \" + n);\n});</code><b>Contoh Output:</b><code class='code-block'>> Angka 1\n> Angka 2\n> Angka 3</code>"], instructions: "Gunakan metode <code>.forEach()</code> pada array <code>buah</code> untuk menampilkan setiap buah ke konsol."}},
+            // Chapter 4
+            { id: 23, chapter: 4, chapterName: "Fungsi & Objek", name: "Deklarasi Fungsi", solution: { regex: /function\s+\w+\s*\(\s*(\w+)?\s*\)\s*\{/ }, content: { title: "23. Deklarasi Fungsi", h2: "Blok Kode Bernama", paragraphs: ["Fungsi adalah blok kode yang dapat digunakan kembali untuk melakukan tugas tertentu. Fungsi dideklarasikan dengan kata kunci <code>function</code>, diikuti oleh nama, tanda kurung untuk parameter, dan kurung kurawal untuk isi fungsi.", "<b>Contoh Pengerjaan:</b><code class='code-block'>function sapa(nama) {\n  console.log(\"Halo, \" + nama);\n}\n\nsapa(\"Budi\");</code><b>Contoh Output:</b><code class='code-block'>> Halo, Budi</code>"], instructions: "Deklarasikan sebuah fungsi bernama <code>hitungLuas</code> yang menerima parameter <code>panjang</code> dan <code>lebar</code>."}},
+            { id: 24, chapter: 4, chapterName: "Fungsi & Objek", name: "Return & Memanggil Fungsi", solution: { regex: /return\s+.+;\s*[\s\S]*\w+\(\s*\d+\s*,\s*\d+\s*\)/s }, content: { title: "24. Return & Memanggil", h2: "Mengembalikan & Menjalankan", paragraphs: ["Pernyataan <code>return</code> menghentikan eksekusi fungsi dan mengembalikan sebuah nilai. Untuk menjalankan fungsi dan mendapatkan nilainya, Anda harus 'memanggilnya' dengan namanya diikuti tanda kurung berisi argumen.", "<b>Contoh Pengerjaan:</b><code class='code-block'>function tambah(a, b) {\n  return a + b;\n}\nlet hasil = tambah(5, 3);\nconsole.log(hasil);</code><b>Contoh Output:</b><code class='code-block'>> 8</code>"], instructions: "Di dalam fungsi <code>hitungLuas</code>, kembalikan hasil perkalian <code>panjang * lebar</code>. Kemudian, panggil fungsi tersebut dengan argumen 5 dan 10, simpan hasilnya di variabel <code>luasPersegi</code>."}},
+            { id: 25, chapter: 4, chapterName: "Fungsi & Objek", name: "Arrow Function", solution: { regex: /const\s+\w+\s*=\s*\([\w,\s]*\)\s*=>/ }, content: { title: "25. Arrow Function", h2: "Sintaks Ringkas", paragraphs: ["Arrow function (<code>=></code>) adalah cara yang lebih ringkas untuk menulis ekspresi fungsi. Jika fungsi hanya memiliki satu baris <code>return</code>, Anda bahkan bisa menghilangkan kurung kurawal dan kata kunci <code>return</code>.", "<b>Contoh Pengerjaan:</b><code class='code-block'>const kaliDua = (angka) => angka * 2;\nconsole.log(kaliDua(5));</code><b>Contoh Output:</b><code class='code-block'>> 10</code>"], instructions: "Ubah fungsi <code>hitungLuas</code> dari latihan sebelumnya menjadi sebuah arrow function."}},
+            { id: 26, chapter: 4, chapterName: "Fungsi & Objek", name: "Membuat Objek", solution: { regex: /const\s+\w+\s*=\s*\{[\s\S]*\};/ }, content: { title: "26. Membuat Objek", h2: "Data Terstruktur", paragraphs: ["Objek adalah kumpulan pasangan 'key-value' (kunci-nilai) yang digunakan untuk menyimpan data yang lebih kompleks. Objek dibuat menggunakan kurung kurawal <code>{}</code>.", "<b>Contoh Pengerjaan:</b><code class='code-block'>const buku = {\n  judul: \"Belajar JavaScript\",\n  halaman: 150,\n  terbit: true\n};\nconsole.log(buku);</code><b>Contoh Output:</b><code class='code-block'>> {\"judul\":\"Belajar JavaScript\",\"halaman\":150,\"terbit\":true}</code>"], instructions: "Buat sebuah objek bernama <code>mahasiswa</code> dengan properti <code>nama</code> (string), <code>semester</code> (number), dan <code>lulus</code> (boolean)."}},
+            { id: 27, chapter: 4, chapterName: "Fungsi & Objek", name: "Mengakses Properti", solution: { regex: /\w+\.\w+/ }, content: { title: "27. Mengakses Properti", h2: "Dot Notation", paragraphs: ["Anda dapat mengakses nilai properti dari sebuah objek menggunakan 'dot notation' (notasi titik), yaitu <code>namaObjek.namaProperti</code>. Anda juga bisa menggunakan notasi kurung siku <code>namaObjek['namaProperti']</code>.", "<b>Contoh Pengerjaan:</b><code class='code-block'>const user = { nama: \"Andi\", online: true };\nconsole.log(user.nama);</code><b>Contoh Output:</b><code class='code-block'>> Andi</code>"], instructions: "Akses properti <code>nama</code> dari objek <code>mahasiswa</code> dan tampilkan ke konsol."}},
+            { id: 28, chapter: 4, chapterName: "Fungsi & Objek", name: "Metode Objek", solution: { regex: /\w+:\s*function\s*\(\s*\)\s*\{/ }, content: { title: "28. Metode Objek", h2: "Fungsi di Dalam Objek", paragraphs: ["Ketika sebuah fungsi adalah properti dari sebuah objek, itu disebut sebagai 'metode'.", "<b>Contoh Pengerjaan:</b><code class='code-block'>const mobil = {\n  merek: \"Toyota\",\n  klakson: function() {\n    console.log(\"Beep beep!\");\n  }\n};\nmobil.klakson();</code><b>Contoh Output:</b><code class='code-block'>> Beep beep!</code>"], instructions: "Tambahkan sebuah metode bernama <code>sapa</code> ke objek <code>mahasiswa</code>. Metode ini harus menampilkan 'Halo!' ke konsol."}},
+            { id: 29, chapter: 4, chapterName: "Fungsi & Objek", name: "Keyword 'this'", solution: { regex: /this\.\w+/ }, content: { title: "29. Keyword 'this'", h2: "Merujuk Diri Sendiri", paragraphs: ["Di dalam sebuah metode objek, kata kunci <code>this</code> merujuk ke objek itu sendiri. Ini memungkinkan Anda mengakses properti lain dari objek yang sama dari dalam metode tersebut.", "<b>Contoh Pengerjaan:</b><code class='code-block'>const user = {\n  nama: \"Citra\",\n  info: function() {\n    console.log(\"Nama user: \" + this.nama);\n  }\n};\nuser.info();</code><b>Contoh Output:</b><code class='code-block'>> Nama user: Citra</code>"], instructions: "Ubah metode <code>sapa</code> agar menampilkan 'Halo, nama saya [nama]' dengan mengambil nama dari properti objek menggunakan <code>this</code>."}},
+            // Chapter 5
+            { id: 30, chapter: 5, chapterName: "Manipulasi DOM", name: "getElementById", solution: { regex: /document\.getElementById\(\s*".*"\s*\)/ }, content: { title: "30. getElementById", h2: "Memilih Elemen", paragraphs: ["Document Object Model (DOM) adalah representasi HTML sebagai objek yang bisa dimanipulasi JavaScript. <code>getElementById()</code> memilih sebuah elemen unik berdasarkan atribut <code>id</code>-nya.", "<b>Contoh Pengerjaan:</b><code class='code-block'>// Anggap di HTML ada: <h1 id=\"judul\">Judul Lama</h1>\nconst judulElement = document.getElementById('judul');\nconsole.log(judulElement);</code><b>Contoh Output:</b><code class='code-block'>> [object HTMLHeadingElement]\n(Ini adalah objek elemen HTML, bukan teksnya)</code>"], instructions: "Gunakan <code>document.getElementById()</code> untuk memilih elemen. (Hanya untuk validasi, tidak akan ada output visual, anggap ada elemen dengan id 'judul')."}},
+            { id: 31, chapter: 5, chapterName: "Manipulasi DOM", name: "querySelector", solution: { regex: /document\.querySelector\(\s*".*"\s*\)/ }, content: { title: "31. querySelector", h2: "Selektor Serbaguna", paragraphs: ["<code>querySelector()</code> adalah metode yang lebih modern dan fleksibel untuk memilih elemen **pertama** yang cocok dengan selektor CSS yang ditentukan (contoh: '#id', '.kelas', 'tag').", "<b>Contoh Pengerjaan:</b><code class='code-block'>// Anggap di HTML ada: <p class=\"info\">Ini info.</p>\nconst infoElement = document.querySelector('.info');\nconsole.log(infoElement);</code><b>Contoh Output:</b><code class='code-block'>> [object HTMLParagraphElement]</code>"], instructions: "Gunakan <code>document.querySelector()</code> untuk memilih elemen dengan kelas CSS '.deskripsi'."}},
+            { id: 32, chapter: 5, chapterName: "Manipulasi DOM", name: "textContent", solution: { regex: /\.textContent\s*=\s*".*";/ }, content: { title: "32. textContent", h2: "Mengubah Teks", paragraphs: ["Properti <code>.textContent</code> digunakan untuk mendapatkan atau mengatur konten teks dari sebuah elemen. Ini adalah cara yang aman untuk mengubah teks karena mengabaikan tag HTML.", "<b>Contoh Pengerjaan:</b><code class='code-block'>// Anggap ada <h1 id=\"judul\">Judul Lama</h1>\nconst judul = document.getElementById('judul');\njudul.textContent = 'Judul Baru dari JS';</code><b>Contoh Output:</b><code class='code-block'>(Tidak ada output konsol. Teks di halaman akan berubah menjadi 'Judul Baru dari JS')</code>"], instructions: "Pilih sebuah elemen, lalu ubah <code>.textContent</code>-nya menjadi 'Judul Baru'."}},
+            { id: 33, chapter: 5, chapterName: "Manipulasi DOM", name: "Mengubah Style", solution: { regex: /\.style\.color\s*=\s*".*";/ }, content: { title: "33. Mengubah Style", h2: "Styling dengan JS", paragraphs: ["Kamu dapat mengubah gaya CSS sebuah elemen secara langsung menggunakan properti <code>.style</code>. Perhatikan bahwa properti CSS seperti <code>background-color</code> ditulis menjadi <code>backgroundColor</code> (camelCase) di JavaScript.", "<b>Contoh Pengerjaan:</b><code class='code-block'>// Anggap ada <p id=\"teks\">Teks ini.</p>\nconst teks = document.getElementById('teks');\nteks.style.fontSize = '24px';</code><b>Contoh Output:</b><code class='code-block'>(Tidak ada output konsol. Ukuran font teks di halaman akan membesar)</code>"], instructions: "Pilih sebuah elemen dan ubah properti <code>.style.color</code>-nya menjadi 'red'."}},
+            { id: 34, chapter: 5, chapterName: "Manipulasi DOM", name: "Mengelola Kelas", solution: { regex: /\.classList\.add\(\s*".*"\s*\)/ }, content: { title: "34. Mengelola Kelas", h2: "classList", paragraphs: ["Mengubah style satu per satu bisa merepotkan. Cara yang lebih baik adalah dengan menambah atau menghapus kelas CSS. Gunakan <code>.classList.add()</code> untuk menambah kelas dan <code>.classList.remove()</code> untuk menghapusnya.", "<b>Contoh Pengerjaan:</b><code class='code-block'>// Anggap ada <div id=\"box\"></div>\nconst box = document.getElementById('box');\nbox.classList.add('highlight');</code><b>Contoh Output:</b><code class='code-block'>(Tidak ada output konsol. Elemen div dengan id 'box' akan mendapatkan style dari kelas '.highlight')</code>"], instructions: "Pilih sebuah elemen dan tambahkan kelas CSS bernama 'aktif' menggunakan <code>.classList.add()</code>."}},
+            { id: 35, chapter: 5, chapterName: "Manipulasi DOM", name: "addEventListener", solution: { regex: /\.addEventListener\(\s*["']click["']\s*,\s*function/ }, content: { title: "35. Event Listener", h2: "Merespon Aksi", paragraphs: ["<code>.addEventListener()</code> adalah cara untuk membuat elemen 'mendengarkan' sebuah aksi pengguna (disebut 'event'), seperti klik mouse atau penekanan tombol, lalu menjalankan sebuah fungsi sebagai respon.", "<b>Contoh Pengerjaan:</b><code class='code-block'>// Anggap ada <button id=\"tombol\">Klik Saya</button>\nconst tombol = document.getElementById('tombol');\ntombol.addEventListener('click', function() {\n  console.log('Tombol telah diklik!');\n});</code><b>Contoh Output:</b><code class='code-block'>(Tidak ada output awal. Setelah tombol di halaman diklik, konsol akan menampilkan:)\n> Tombol telah diklik!</code>"], instructions: "Pilih sebuah elemen (misal sebuah tombol) dan tambahkan event listener untuk event <code>'click'</code> yang menjalankan sebuah fungsi."}}
+        ];
+        
+        const chapterEndExercises = [8, 15, 22, 29, 35]; // ID latihan terakhir di setiap chapter
+        const XP_PER_EXERCISE = 10;
+        const XP_PER_PROJECT = 20;
+
+        let currentExerciseIndex = 0;
+        let progress = {};
+
+        function saveProgress() {
+            localStorage.setItem(localStorageKey, JSON.stringify(progress));
+        }
+
+        function loadProgress() {
+            progress = JSON.parse(localStorage.getItem(localStorageKey)) || {};
+        }
+
+        function updateSystemLog(message) {
+            UIElements.logMessage.textContent = `[Log Sistem]: ${message}`;
+        }
+        
+        function updateChapterProgress() {
+            const currentChapter = allExercises[currentExerciseIndex].chapter;
+            const exercisesInChapter = allExercises.filter(ex => ex.chapter === currentChapter);
+            const completedInChapter = exercisesInChapter.filter(ex => progress[ex.id]?.isCompleted).length;
+            const chapterProgress = (completedInChapter / exercisesInChapter.length) * 100;
+            UIElements.progressFill.style.width = `${chapterProgress}%`;
+            UIElements.progressPercent.textContent = `${Math.round(chapterProgress)}%`;
+        }
+        
+        function loadExercise(index) {
+            currentExerciseIndex = index;
+            const exercise = allExercises[index];
+            UIElements.breadcrumb.textContent = `JavaScript / ${exercise.chapterName}`;
+            UIElements.instructionsPanel.innerHTML = `<h1>${exercise.content.title}</h1><h2>${exercise.content.h2}</h2>${exercise.content.paragraphs.map(p => `<p>${p}</p>`).join('')}<h2>Instruksi</h2><p>${exercise.content.instructions}</p>`;
+            UIElements.codeEditor.value = progress[exercise.id]?.userCode || commentText;
+            updateChapterProgress();
+            runCode();
+            updateLineNumbers();
+            UIElements.backBtn.disabled = index === 0;
+            const isLastExercise = index === allExercises.length - 1;
+            const isCompleted = progress[exercise.id]?.isCompleted || false;
+            UIElements.nextBtn.disabled = !isLastExercise && !isCompleted;
+            UIElements.nextBtn.textContent = (isLastExercise && isCompleted) ? "Selesai" : "Lanjut";
+            updateSystemLog(`Memuat Latihan ${exercise.id}: ${exercise.name}.`);
+        }
+
+        function updateLineNumbers() {
+            const lines = UIElements.codeEditor.value.split('\n').length;
+            UIElements.lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => `<div>${i + 1}</div>`).join('');
+        }
+
+        function validateCode(userInput) {
+            const exercise = allExercises[currentExerciseIndex];
+            const solution = exercise.solution;
+            if (!solution.regex) return false;
+            const codeToTest = solution.validateWithComments ? userInput : userInput.replace(/\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
+            return solution.regex.test(codeToTest);
+        }
+
+        function runCode() {
+            const userCode = UIElements.codeEditor.value.replace(commentText, '');
+            UIElements.outputFrame.innerHTML = '';
+            const originalLog = console.log;
+            console.log = function(...args) {
+                const message = args.map(arg => typeof arg === 'object' ? JSON.stringify(arg) : arg).join(' ');
+                const logEntry = document.createElement('div');
+                logEntry.textContent = `> ${message}`;
+                UIElements.outputFrame.appendChild(logEntry);
+                originalLog.apply(console, args);
+            };
+            try {
+                new Function(userCode)();
+            } catch (e) {
+                const errorEntry = document.createElement('div');
+                errorEntry.textContent = `> Error: ${e.message}`;
+                errorEntry.style.color = 'var(--red)';
+                UIElements.outputFrame.appendChild(errorEntry);
+            }
+            console.log = originalLog;
+        }
+
+        function triggerPopper() {
+            UIElements.popperContainer.innerHTML = '';
+            UIElements.popperContainer.style.display = 'block';
+            const colors = ['#ffc700', '#4ade80', '#3b82f6', '#f87171', '#a855f7'];
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                UIElements.popperContainer.appendChild(confetti);
+            }
+        }
+
+        function showChapterCompleteModal(completedChapter) {
+            const exercisesInChapter = allExercises.filter(ex => ex.chapter === completedChapter);
+            const chapterXp = exercisesInChapter.reduce((sum, ex) => {
+                const xp = ex.chapter === 5 ? XP_PER_PROJECT : XP_PER_EXERCISE;
+                return progress[ex.id]?.isCompleted ? sum + xp : sum;
+            }, 0);
+            
+            const totalXp = Object.keys(progress).reduce((sum, id) => {
+                 const exercise = allExercises.find(ex => ex.id == id);
+                 if(progress[id].isCompleted && exercise) {
+                     const xp = exercise.chapter === 5 ? XP_PER_PROJECT : XP_PER_EXERCISE;
+                     return sum + xp;
+                 }
+                 return sum;
+            }, 0);
+
+            const level = Math.floor(totalXp / 80) + 1;
+
+            UIElements.chapterCompleteTitle.textContent = `Chapter ${completedChapter} Selesai!`;
+            UIElements.chapterXpValue.textContent = `+${chapterXp}`;
+            UIElements.totalXpValue.textContent = totalXp;
+            UIElements.levelValue.textContent = level;
+
+            UIElements.chapterCompleteModal.style.display = 'flex';
+            setTimeout(() => {
+                UIElements.chapterCompleteModal.style.opacity = 1;
+            }, 10);
+        }
+        
+        function submitAnswer() {
+            const currentId = allExercises[currentExerciseIndex].id;
+            progress[currentId] = { ...progress[currentId], userCode: UIElements.codeEditor.value };
+
+            if (validateCode(UIElements.codeEditor.value)) {
+                progress[currentId].isCompleted = true;
+                showFeedbackModal("Benar!", true);
+                updateSystemLog("Jawaban benar. Kerja bagus!");
+                
+                const currentChapter = allExercises[currentExerciseIndex].chapter;
+                const isChapterEnd = chapterEndExercises.includes(currentId);
+
+                if (isChapterEnd && currentId !== 35) { // Jika akhir chapter, tapi bukan akhir kursus
+                    UIElements.nextBtn.disabled = true; // Nonaktifkan tombol lanjut utama
+                    setTimeout(() => {
+                        triggerPopper();
+                        setTimeout(() => {
+                            UIElements.popperContainer.style.display = 'none';
+                            showChapterCompleteModal(currentChapter)
+                        }, 2500);
+                    }, 1000);
+                } else {
+                    if (currentExerciseIndex < allExercises.length - 1) {
+                        UIElements.nextBtn.disabled = false;
+                    }
+                    if(currentExerciseIndex === allExercises.length - 1) {
+                       UIElements.nextBtn.textContent = "Selesai";
+                       UIElements.nextBtn.disabled = false;
+                    }
+                }
+            } else {
+                progress[currentId].isCompleted = false;
+                showFeedbackModal("Kurang Tepat", false);
+                updateSystemLog("Jawaban kurang tepat. Coba lagi.");
+            }
+            updateChapterProgress();
+            saveProgress();
+        }
+        
+        function showFeedbackModal(message, isSuccess) {
+            UIElements.modalTitle.textContent = message;
+            UIElements.modalContent.className = 'feedback-modal-content ' + (isSuccess ? 'success' : 'error');
+            UIElements.feedbackModal.style.display = 'flex';
+        }
+
+        function navigate(direction) {
+            progress[allExercises[currentExerciseIndex].id] = { ...progress[allExercises[currentExerciseIndex].id], userCode: UIElements.codeEditor.value };
+            saveProgress();
+            const newIndex = direction === 'next' ? currentExerciseIndex + 1 : currentExerciseIndex - 1;
+            if (newIndex >= 0 && newIndex < allExercises.length) {
+                loadExercise(newIndex);
+            } else if (newIndex === allExercises.length) {
+                window.location.href = "belajar-javascript.html";
+            }
+        }
+
+        // --- Event Listeners ---
+        UIElements.runBtn.addEventListener('click', runCode);
+        UIElements.submitBtn.addEventListener('click', submitAnswer);
+        UIElements.nextBtn.addEventListener('click', () => navigate('next'));
+        UIElements.backBtn.addEventListener('click', () => navigate('back'));
+        UIElements.codeEditor.addEventListener('input', updateLineNumbers);
+        UIElements.codeEditor.addEventListener('scroll', () => { UIElements.lineNumbers.scrollTop = UIElements.codeEditor.scrollTop; });
+        UIElements.modalCloseBtn.addEventListener('click', () => { UIElements.feedbackModal.style.display = 'none'; });
+        UIElements.chapterContinueBtn.addEventListener('click', () => {
+             UIElements.chapterCompleteModal.style.opacity = 0;
+             setTimeout(() => {
+                UIElements.chapterCompleteModal.style.display = 'none';
+                navigate('next');
+             }, 300);
+        });
+        
+        // --- Initial Load ---
+        loadProgress(); 
+        const urlParams = new URLSearchParams(window.location.search);
+        const exerciseId = parseInt(urlParams.get('exercise')) || 1;
+        const startIndex = allExercises.findIndex(e => e.id === exerciseId);
+        loadExercise(startIndex !== -1 ? startIndex : 0);
+    });
+
+
+        // di klik saat ukuran hp
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    // reset tab
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // reset panels
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById(btn.dataset.target).classList.add('active');
+  });
+});
+
+// default tampil panel pertama
+document.getElementById('instructions-panel').classList.add('active');
+    </script>
+</body>
+</html>

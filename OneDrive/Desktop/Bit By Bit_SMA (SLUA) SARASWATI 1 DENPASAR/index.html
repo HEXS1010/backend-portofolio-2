@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>/CODING LEARN</title>
+    <link rel="website" type="png" href="img/logo versi 2.png">
+
+    <!-- logo -->
+      <link rel="website icon" type="png" href="img/logo web.png">
+
+    <!-- css -->
+    <link rel="stylesheet" href="css/gaya.css">
+   
+   <!-- font code -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+    <!-- icons -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+     <!-- Remix Icon -->
+     <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"/>
+
+    <!-- logos font -->
+    <link href="https://cdn.jsdelivr.net/npm/font-logos@1/assets/font-logos.css" rel="stylesheet">
+
+    <!-- AOS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<style>
+  /* loading logo mulai */
+  body { 
+    margin: 0; 
+    padding: 0; 
+    font-family: "Source Code Pro", monospace;
+    background: #0e1623; 
+    color: white; 
+    overflow: hidden; 
+  }
+
+#preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0e1623;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    #logo {
+      width: 150px;
+      position: relative;
+      z-index: 2;
+    }
+
+    #loading-text {
+  position: absolute;
+  font-size: 2.5rem;
+  font-weight: bold;
+  opacity: 0;
+  transform: translateX(-100px);
+  white-space: nowrap;
+  margin-left: 180px;
+  background: linear-gradient(to right, #ffffff 0% 55%, #ffc700 50% 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#loading-text .highlight {
+  color: #ffc700; 
+  margin-left: 10px; 
+}
+
+  
+
+    @media (max-width: 600px) {
+  #loading-text {
+    font-size: 1.6rem;
+    margin-left: 50px;
+  }
+
+  #logo {
+    width: 100px;
+  }
+
+ 
+
+}
+/* loading logo akhir */
+</style>
+
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div id="preloader">
+    <img id="logo" src="img/logo versi 2.png" alt="Logo">
+    <h1 id="loading-text">/CODING<span class="highlight">LEARN</span></h1>
+  </div>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script>
+    let tl = gsap.timeline();
+
+    // 1. Logo muncul di tengah
+    tl.from("#logo", {
+      duration: 1.5,
+      scale: 0,
+      opacity: 0,
+      ease: "elastic.out(1, 0.5)"
+    });
+
+    // 2. Logo geser ke kiri biar ada ruang buat teks
+    tl.to("#logo", {
+      duration: 1,
+      x: -120,
+      ease: "power2.out"
+    });
+
+    // 3. Teks keluar dari kiri
+    tl.to("#loading-text", {
+      duration: 1.2,
+      opacity: 1,
+      x: 0,
+      ease: "power3.out"
+    }, "-=0.5");
+
+    // 4. Hilangkan preloader
+    tl.to("#preloader", {
+      delay: 1,
+      duration: 1,
+      opacity: 0,
+      onComplete: () => {
+        document.getElementById("preloader").style.display = "none";
+        document.getElementById("content").style.display = "block";
+        document.body.style.overflow = "auto";
+      }
+    });
+  </script>
+ 
+
+
+
+
+
+
+
+
+
+
+
+    <!-- navbar mulai -->
+     <header>
+        <nav class="navbar">
+            <img class="navbar-logo logo-big" src="img/logo revisi 2.png" alt="logo">
+            
+            <!-- navbar group -->
+            <ul class="navbar-group navbar-expanded">
+                <li class="navbar-item"><a href="index.html">Home</a></li>
+                <li class="navbar-item"><a href="#learn">Learn &#9662;</a>
+                    <ul class="navbar-down">
+                        <li class="navbar-item"><a href="">Web Dev</a></li>
+                        <li class="navbar-item"><a href="">Game Dev</a></li>
+                        <li class="navbar-item"><a href="">Cybersecurity</a></li>
+                    </ul>
+                </li>
+                <li class="navbar-item"><a href="#learn">Language &#9662;</a>
+                    <ul class="navbar-down">
+                        <li class="navbar-item"><a href="html learn.html"><i class="fa-brands fa-html5"></i>Html</a></li>
+                        <li class="navbar-item"><a href=""><i class="fa-brands fa-css3-alt"></i>Css</a></li>
+                        <li class="navbar-item"><a href=""><i class="fa-brands fa-java"></i>Java</a></li>
+                        <li class="navbar-item"><a href="python learn.html"><i class="fa-brands fa-python"></i>Python</a></li>
+                        <li class="navbar-item"><a href=""><i class="fa-brands fa-php"></i>Php</a></li>
+                    </ul>
+                </li>
+                <li class="navbar-item"><a href="community.html">Community &#9662;</a>
+                    <ul class="navbar-down">
+                        <li class="navbar-item"><a href="community.html"><i class="fa-solid fa-globe"></i>COMMUNITY</a></li>
+                        <li class="navbar-item"><a href=""><i class="fa-regular fa-calendar"></i>Event</a></li>
+                    </ul>
+                </li> 
+                <li class="navbar-item"><a href="community.html">Forum</a></li>
+            </ul>
+
+          <div class="burger">
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+          </div>
+
+
+            <div class="navbar-action">
+              <a href="login.html">
+                <button>Login</button>
+                <button>Sign Up</button>
+              </a>
+            </div>
+        </nav>
+     </header>
+    <!-- navbar akhir -->
+
+    
+
+     
+
+    
+    
+    
+    <!-- slider mulai -->
+    <div class="slider-container">
+
+         <!-- typing animasi -->
+         <div class="container-typing">
+         <p>  
+             <span class="typing-text"></span>
+             <span class="cursor">&nbsp;</span>
+         
+         </p>
+
+        <div class="slider-item">
+            <img src="img/pixel 1.png" alt="foto">
+        </div>
+        <div class="slider-item">         
+            <img src="img/pixel 4.gif" alt="foto">
+        </div>
+        <div class="slider-item">
+            <img src="img/pixel 5.jpg" alt="foto">
+        </div>
+
+        <!-- Get strated -->
+        <div class="hero-text">
+            <a href="login.html" class="btn">Get strated</a>
+        </div>
+        
+    </div>
+</div>
+<!-- slider akhir -->
+
+
+<!-- about section awal -->
+<section class="about-section">
+  <small class="about-question"></small>
+  <h1 class="about-title"></h1>
+  
+  <div class="card-container" data-aos="fade-up" data-aos-duration="3000" data-aos-delay="3000">
+    <div class="info-card">
+      <h3>Learning Paths</h3>
+      <p>Belajar dengan jalur terarah sesuai kemampuanmu.</p>
+    </div>
+    <div class="info-card">
+      <h3>Real-World Projects</h3>
+      <p>Praktik langsung dengan studi kasus nyata.</p>
+    </div>
+    <div class="info-card">
+      <h3>Community Support</h3>
+      <p>Bergabung dengan komunitas coder untuk saling membantu.</p>
+    </div>
+    <div class="info-card">
+      <h3>Best Coach</h3>
+      <p>Dibimbing oleh pelatih berpengalaman dibidangnya masing masing.</p>
+    </div>
+    <div class="info-card">
+      <h3>Real Projects</h3>
+      <p>Bangun projek nyata agar skill coding makin mantap.</p>
+    </div>
+    <div class="info-card">
+      <h3>Career Ready</h3>
+      <p>Siap menghadapi dunia kerja dengan skill programming.</p>
+    </div>
+  </div>
+</section>
+<!-- about section akhir -->
+
+
+
+
+<!-- intro section mulai -->
+<section class="intro-section">
+
+  <!-- intro 1 -->
+  <div class="browser" data-aos="fade-right" data-aos-duration="3000" >
+    <!-- Browser Header -->
+    <div class="browser-header">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+    </div>
+    
+    <!-- Browser Content -->
+    <div class="browser-content">
+      <pre><code id="typing"></code><span class="cursor"></span></pre>
+    </div>
+  </div>
+</div>
+<div class="intro-right" data-aos="fade-right" data-aos-duration="3000" >
+  <h3 class="intro-title">Belajar coding jadi Mudah, seru, parktis dan simpel ✨✨</h3>
+  <p class="intro-desc">Belajar coding jadi lebih mudah, praktis, dan menyenangkan. Semua tersedia langsung di browser kamu tanpa ribet install apapun.</p>
+</div>
+</section>
+
+
+<!-- intro 2 -->
+<section class="intro-section reverse">
+  <div class="intro-left">
+    <a href="">
+      <img src="img/intro 2.png" alt="foto" data-aos="fade-left" data-aos-duration="3000">
+    </a>
+</div> 
+
+<div class="intro-right" data-aos="fade-left" data-aos-duration="3000" >
+  <h3 class="intro-title" >Event yang seru dan menguji bakatmu ⚔️⚔️</h3>
+  <p class="intro-desc">selain belajar kamu dapat bertarung nyata dengan semua orang secara online. Tunjukan dirimu kepada dunia sekarang</p>
+</div>
+</section>
+
+<!-- intro 3 -->
+ <section class="intro-section">
+  <div class="intro-left">
+    <a href="">
+      <img src="img/intro 3.png" alt="foto" data-aos="fade-right" data-aos-duration="3000">
+    </a>
+</div> 
+
+<div class="intro-right" data-aos="fade-right" data-aos-duration="3000" >
+  <h3 class="intro-title">Belajar, Naik Level, Jadi Yang Teratas Dari Yang Lain!✨✨</h3>
+  <p class="intro-desc">Tunjukan pada dunia kamu lah orang yang tak terkalahkan dan berhak menjadi yang teratas</p>
+</div>
+</section>
+
+
+<!-- intro 4 -->
+ <section class="intro-section reverse">
+  <div class="intro-left">
+    <a href="">
+      <img src="img/intro 4.png" alt="foto" data-aos="fade-left" data-aos-duration="3000">
+    </a>
+</div> 
+
+<div class="intro-right" data-aos="fade-left" data-aos-duration="3000" >
+  <h3 class="intro-title">Ngoding bareng teman dari seluruh dunia💬💬</h3>
+  <p class="intro-desc">Selain kamu bertarung kamu juga dapat bekerjasama dalam menyeselainkan projek bersama teman dari seluruh dunia</p>
+</div>
+</section>
+<!-- intro section akhir -->
+
+
+
+
+
+
+<!-- SKILL SECTION awal -->
+<section class="skill-section" id="learn">
+<div class="skill-header" data-aos="fade-up" data-aos-delay="1000" data-aos-duration="2000">
+    <small class="skill-subtitle">Bingung mau belajar yang mana?</small>
+    <h2 class="skill-title">Pilih Skill Coding Kamu 🚀</h2>
+  </div>
+
+  <div class="skill-container" data-aos="fade-up" data-aos-delay="1000" data-aos-duration="2000">
+    <a href="html learn.html" class="skill-card">
+      <i class="fa-brands fa-html5"></i>
+      <span>HTML</span>
+    </a>
+    
+    <a href="" class="skill-card">
+      <i class="fa-brands fa-css3-alt"></i>
+      <span>CSS</span>
+    </a>
+
+    <a href="javascript learn.html" class="skill-card">
+      <i class="fa-brands fa-js"></i>
+      <span>JavaScript</span>
+    </a>
+
+    <a href="python learn.html" class="skill-card">
+      <i class="fa-brands fa-python"></i>
+      <span>Python</span>
+    </a>
+
+    <a href="#java" class="skill-card">
+      <i class="fa-brands fa-java"></i>
+      <span>Java</span>
+    </a>
+
+    <a href="#webdev" class="skill-card">
+      <i class="fa-solid fa-code"></i>
+      <span>Web Development</span>
+    </a>
+
+    <a href="#datasci" class="skill-card">
+      <i class="fa-solid fa-database"></i>
+      <span>Data Science</span>
+    </a>
+    
+    <a href="#GO" class="skill-card">
+      <i class="fa-brands fa-golang"></i>
+      <span>GO</span>
+    </a>
+    
+    <a href="#PHP" class="skill-card">
+      <i class="fa-brands fa-php"></i>
+      <span>PHP</span>
+    </a>
+    
+    <a href="#CyberSecurity" class="skill-card">
+      <i class="fa-solid fa-shield-halved"></i>
+      <span>CyberSecurity</span>
+    </a>
+    
+    <a href="#datasci" class="skill-card">
+      <i class="fa-solid fa-brain"></i>
+      <span>Machine Learning</span>
+    </a>
+    
+    <a href="#AI" class="skill-card">
+      <i class="fa-solid fa-microchip"></i>
+      <span>Artificial Intelligence</span>
+    </a>
+    
+    <a href="#GameDev" class="skill-card">
+      <i class="fa-solid fa-gamepad"></i>
+      <span>Game Development</span>
+    </a>
+    
+    <a href="#Mobile" class="skill-card">
+      <i class="fa-solid fa-mobile-screen-button"></i>
+      <span>Mobile Development</span>
+    </a>
+    
+    <a href="#React" class="skill-card">
+      <i class="fa-brands fa-react"></i>
+      <span>React</span>
+    </a>
+    
+    <a href="#SQL" class="skill-card">
+      <i class="fa-solid fa-database"></i>
+      <span>SQL</span>
+    </a>
+    
+    <a href="#NumPy" class="skill-card">
+      <i class="fa-solid fa-square-root-variable"></i>
+      <span>NumPy</span>
+    </a>
+    
+    <a href="#Phaser" class="skill-card">
+      <i class="fa-solid fa-gamepad"></i>
+      <span>Phaser</span>
+    </a>
+
+    <a href="#P5.Js" class="skill-card">
+      <i class="fa-solid fa-palette"></i>
+      <span>P5.Js</span>
+    </a>
+  </div>
+
+  <div class="skill-footer" data-aos="fade-up" data-aos-delay="1000" data-aos-duration="2000">
+    <p>Looking for something else?
+      <a href="/catalog.html" class="skill-link">Explore the catalog <i class="fa-solid fa-arrow-right"></i></a>
+    </p>
+  </div>
+</section>
+<!-- SKILL SECTION akhir -->
+
+
+<!-- footer mulai -->
+    <footer class="footer">
+      <div class="footer-top">
+        <div class="footer-logo">
+          <!-- <h2><i class="fa-solid fa-code"></i> Co</h2> -->
+           <img src="img/logo revisi 2.png" alt="logo">
+        </div>
+      </div>
+
+      <div class="footer-content">
+        <!-- Company -->
+        <div class="footer-col">
+          <h4>COMPANY</h4>
+          <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Shop</a></li>
+            <li><a href="#">Community</a></li>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Pricing</a></li>
+          </ul>
+        </div>
+
+        <!-- Practice -->
+        <div class="footer-col">
+          <h4>PRACTICE</h4>
+          <ul>
+            <li><a href="#">Tantangan</a></li>
+            <li><a href="#">Projek</a></li>
+            <li><a href="#">Event</a></li>
+          </ul>
+        </div>
+
+        <!-- Learn -->
+        <div class="footer-col">
+          <h4>LEARN</h4>
+          <ul>
+            <li><a href="#">All Courses</a></li>
+            <li><a href="#">Python</a></li>
+            <li><a href="#">Intermediate Python</a></li>
+            <li><a href="#">NumPy</a></li>
+            <li><a href="#">SQL</a></li>
+            <li><a href="#">HTML</a></li>
+            <li><a href="#">CSS</a></li>
+            <li><a href="#">JavaScript</a></li>
+            <li><a href="#">Intermediate JavaScript</a></li>
+          </ul>
+        </div>
+
+        <!-- More -->
+        <div class="footer-col">
+          <h4>MORE</h4>
+          <ul>
+            <li><a href="#">React</a></li>
+            <li><a href="#">p5.js</a></li>
+            <li><a href="#">C++</a></li>
+            <li><a href="#">Java</a></li>
+            <li><a href="#">Phaser</a></li>
+            <li><a href="#">Pandas</a></li>
+            <li><a href="#">Machine Learning</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 Bit By Bit Team | <a href="#">Terms</a> | <a href="#">Privacy Policy</a></p>
+        <div class="footer-socials">
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-github"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="#"><i class="fa-brands fa-discord"></i></a>
+        </div>
+      </div>
+    </footer>
+
+ <!-- footer akhir -->
+
+
+
+     <!-- javascript -->
+      <script src="js/script.js"></script>
+    
+      <!-- AOS -->
+         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      once: true,
+    });
+  </script>
+
+      <!-- greensock -->
+       <script src="https://cdn.jsdelivr.net/npm/gsap@3.13/dist/gsap.min.js"></script>
+       <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/TextPlugin.min.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+       <script>
+        gsap.registerPlugin(TextPlugin, ScrollTrigger); 
+
+        gsap.to(".about-title", {
+    scrollTrigger: {
+      trigger: ".about-title",  
+      start: "top 80%",        
+      toggleActions: "play none none none"
+    },
+    duration: 4,
+    text: "Bangun skill teknologi dari dasar hingga tingkat lanjutan 🚀🚀"
+  });
+
+  gsap.to(".about-question", {
+    scrollTrigger: {
+      trigger: ".about-question",
+      start: "top 80%",
+      toggleActions: "play none none none"
+    },
+    duration: 4,
+    text: "Mengapa Harus Coding Learn?"
+  });
+       </script>
+</body>
+</html>
